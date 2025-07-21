@@ -28,15 +28,15 @@ app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
 # Initialize the app with the extension
 db.init_app(app)
 
-# Import and register API routes
-from api_routes import api_bp
-app.register_blueprint(api_bp, url_prefix='/api')
-
 with app.app_context():
     # Import models to ensure tables are created
     import models
     db.create_all()
     logging.info("✅ Database initialized successfully")
+
+# Import and register API routes after app context
+from api_routes import api_bp
+app.register_blueprint(api_bp, url_prefix='/api')
 
 if __name__ == "__main__":
     # Run the headless Flask API backend

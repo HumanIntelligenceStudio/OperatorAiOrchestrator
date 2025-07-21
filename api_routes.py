@@ -9,15 +9,29 @@ from health_monitor import HealthMonitor
 # Create API blueprint for headless backend
 api_bp = Blueprint('api', __name__)
 
-# Initialize controllers
-agent_controller = AgentMasterController()
-health_monitor = HealthMonitor()
+# Controllers will be initialized when needed within routes
+agent_controller = None
+health_monitor = None
+
+def get_agent_controller():
+    global agent_controller
+    if agent_controller is None:
+        agent_controller = AgentMasterController()
+    return agent_controller
+
+def get_health_monitor():
+    global health_monitor
+    if health_monitor is None:
+        health_monitor = HealthMonitor()
+    return health_monitor
 
 @api_bp.route('/status', methods=['GET'])
 def system_status():
     """Get comprehensive system status"""
     try:
-        status = agent_controller.get_system_status()
+        controller = get_agent_controller()
+        controller._initialize_pools()  # Ensure pools are initialized
+        status = controller.get_system_status()
         return jsonify({
             'status': 'success',
             'data': status

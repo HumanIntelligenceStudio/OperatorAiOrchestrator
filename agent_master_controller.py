@@ -20,37 +20,40 @@ class AgentMasterController:
         self.is_running = False
         self.monitoring_thread = None
         self.agent_pools = {}
-        self._initialize_pools()
+        self.initialized = False
         
     def _initialize_pools(self):
         """Initialize default agent pools"""
+        if self.initialized:
+            return
+            
         try:
-            with db.session.begin():
-                default_pools = [
-                    {'name': 'healthcare', 'type': 'healthcare', 'target': 3, 'min': 1, 'max': 10},
-                    {'name': 'financial', 'type': 'financial', 'target': 3, 'min': 1, 'max': 8},
-                    {'name': 'sports', 'type': 'sports', 'target': 2, 'min': 1, 'max': 6},
-                    {'name': 'business', 'type': 'business', 'target': 4, 'min': 1, 'max': 12},
-                    {'name': 'general', 'type': 'general', 'target': 5, 'min': 2, 'max': 15}
-                ]
-                
-                for pool_config in default_pools:
-                    existing_pool = AgentPool.query.filter_by(pool_name=pool_config['name']).first()
-                    if not existing_pool:
-                        pool = AgentPool(
-                            pool_name=pool_config['name'],
-                            pool_type=pool_config['type'],
-                            target_agents=pool_config['target'],
-                            min_agents=pool_config['min'],
-                            max_agents=pool_config['max'],
-                            auto_scale=True,
-                            health_status='healthy'
-                        )
-                        db.session.add(pool)
-                
-                db.session.commit()
-                logging.info("✅ Agent pools initialized successfully")
-                
+            default_pools = [
+                {'name': 'healthcare', 'type': 'healthcare', 'target': 3, 'min': 1, 'max': 10},
+                {'name': 'financial', 'type': 'financial', 'target': 3, 'min': 1, 'max': 8},
+                {'name': 'sports', 'type': 'sports', 'target': 2, 'min': 1, 'max': 6},
+                {'name': 'business', 'type': 'business', 'target': 4, 'min': 1, 'max': 12},
+                {'name': 'general', 'type': 'general', 'target': 5, 'min': 2, 'max': 15}
+            ]
+            
+            for pool_config in default_pools:
+                existing_pool = AgentPool.query.filter_by(pool_name=pool_config['name']).first()
+                if not existing_pool:
+                    pool = AgentPool(
+                        pool_name=pool_config['name'],
+                        pool_type=pool_config['type'],
+                        target_agents=pool_config['target'],
+                        min_agents=pool_config['min'],
+                        max_agents=pool_config['max'],
+                        auto_scale=True,
+                        health_status='healthy'
+                    )
+                    db.session.add(pool)
+            
+            db.session.commit()
+            self.initialized = True
+            logging.info("✅ Agent pools initialized successfully")
+            
         except Exception as e:
             logging.error(f"❌ Failed to initialize pools: {e}")
             db.session.rollback()

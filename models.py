@@ -46,7 +46,7 @@ class Task(db.Model):
     completed_at = db.Column(db.DateTime, nullable=True)
     response = db.Column(Text, nullable=True)
     error_message = db.Column(Text, nullable=True)
-    metadata = db.Column(JSON, default=dict)
+    task_metadata = db.Column(JSON, default=dict)
 
 class Conversation(db.Model):
     """Conversation model for OpenAI Assistants integration"""
@@ -67,7 +67,7 @@ class SystemMetrics(db.Model):
     metric_value = db.Column(db.Float, nullable=False)
     metric_unit = db.Column(db.String(20), nullable=True)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
-    metadata = db.Column(JSON, default=dict)
+    metric_metadata = db.Column(JSON, default=dict)
 
 class AgentPool(db.Model):
     """Agent pool configuration and status"""
