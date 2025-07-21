@@ -3,12 +3,20 @@ import logging
 import json
 from typing import Dict, List, Optional, Any
 from openai import OpenAI
-from models import Conversation, User
-from app import db
+# Models will be imported dynamically to avoid circular imports
 from datetime import datetime
 
+# Import enhanced AI providers
+try:
+    from claude_provider import get_claude_provider
+    from grok_provider import get_grok_provider
+except ImportError as e:
+    logging.warning(f"Enhanced AI providers not available: {e}")
+    get_claude_provider = None
+    get_grok_provider = None
+
 class AIProviderManager:
-    """Enhanced AI provider integration with OpenAI Assistants and persistent conversations"""
+    """Enhanced AI provider integration with OpenAI Assistants, Claude, Grok, and persistent conversations"""
     
     def __init__(self):
         # Initialize OpenAI client
@@ -19,6 +27,10 @@ class AIProviderManager:
             raise ValueError("OPENAI_API_KEY environment variable must be set")
             
         self.openai_client = OpenAI(api_key=self.openai_api_key)
+        
+        # Initialize enhanced AI providers
+        self.claude_provider = get_claude_provider() if get_claude_provider else None
+        self.grok_provider = get_grok_provider() if get_grok_provider else None
         
         # Domain-specific assistant configurations
         self.assistant_configs = {
@@ -154,9 +166,13 @@ Important guidelines:
         except Exception as e:
             logging.error(f"Failed to initialize assistants: {e}")
 
-    def get_or_create_conversation(self, user_id: int, conversation_type: str) -> Conversation:
+    def get_or_create_conversation(self, user_id: int, conversation_type: str):
         """Get existing conversation or create new one for user and type"""
         try:
+            # Import models dynamically to avoid circular imports
+            from models import Conversation
+            from app import db
+            
             # Look for existing conversation
             conversation = Conversation.query.filter_by(
                 user_id=user_id,
@@ -388,3 +404,311 @@ Important guidelines:
                 results[domain] = False
         
         return results
+    
+    # Enhanced AI Provider Methods - Multi-Model Analysis
+    
+    def get_multi_provider_analysis(self, query: str, domain: str = 'financial', context: Dict[str, Any] = None) -> Dict[str, Any]:
+        """
+        Get analysis from multiple AI providers for comprehensive insights
+        """
+        results = {
+            'query': query,
+            'domain': domain,
+            'providers': {},
+            'timestamp': datetime.now().isoformat(),
+            'context_used': bool(context)
+        }
+        
+        # OpenAI GPT-4o analysis
+        try:
+            gpt_result = self.get_quick_response(query, domain, context)
+            if not gpt_result.get('error'):
+                results['providers']['openai'] = {
+                    'response': gpt_result.get('response', ''),
+                    'model': 'gpt-4o',
+                    'status': 'success'
+                }
+        except Exception as e:
+            results['providers']['openai'] = {
+                'status': 'error',
+                'error': str(e)
+            }
+        
+        # Claude analysis for financial domain
+        if domain in ['financial', 'business'] and self.claude_provider and self.claude_provider.is_available():
+            try:
+                claude_result = self.claude_provider.financial_analysis(query, context)
+                if not claude_result.get('error'):
+                    results['providers']['claude'] = {
+                        'response': claude_result.get('analysis', ''),
+                        'model': claude_result.get('model', 'claude-sonnet-4'),
+                        'status': 'success'
+                    }
+            except Exception as e:
+                results['providers']['claude'] = {
+                    'status': 'error', 
+                    'error': str(e)
+                }
+        
+        # Grok analysis for business insights
+        if domain in ['financial', 'business', 'general'] and self.grok_provider and self.grok_provider.is_available():
+            try:
+                grok_result = self.grok_provider.business_analysis(query, context)
+                if not grok_result.get('error'):
+                    results['providers']['grok'] = {
+                        'response': grok_result.get('analysis', ''),
+                        'model': grok_result.get('model', 'grok-2'),
+                        'status': 'success'
+                    }
+            except Exception as e:
+                results['providers']['grok'] = {
+                    'status': 'error',
+                    'error': str(e)
+                }
+        
+        return results
+    
+    def get_risk_assessment_analysis(self, investment_data: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Get comprehensive risk assessment from multiple AI providers
+        """
+        results = {
+            'investment_data': investment_data,
+            'providers': {},
+            'timestamp': datetime.now().isoformat()
+        }
+        
+        # Claude risk assessment (specialized)
+        if self.claude_provider and self.claude_provider.is_available():
+            try:
+                claude_result = self.claude_provider.risk_assessment(investment_data)
+                if not claude_result.get('error'):
+                    results['providers']['claude_risk'] = {
+                        'assessment': claude_result.get('risk_assessment', ''),
+                        'model': claude_result.get('model', 'claude-sonnet-4'),
+                        'status': 'success'
+                    }
+            except Exception as e:
+                results['providers']['claude_risk'] = {
+                    'status': 'error',
+                    'error': str(e)
+                }
+        
+        # Grok investment strategy
+        if self.grok_provider and self.grok_provider.is_available():
+            try:
+                grok_result = self.grok_provider.investment_strategy(investment_data)
+                if not grok_result.get('error'):
+                    results['providers']['grok_strategy'] = {
+                        'strategy': grok_result.get('investment_strategy', ''),
+                        'model': grok_result.get('model', 'grok-2'),
+                        'status': 'success'
+                    }
+            except Exception as e:
+                results['providers']['grok_strategy'] = {
+                    'status': 'error',
+                    'error': str(e)
+                }
+        
+        # OpenAI financial analysis
+        try:
+            query = f"Analyze investment risks for: {json.dumps(investment_data, indent=2)}"
+            gpt_result = self.get_quick_response(query, 'financial')
+            if not gpt_result.get('error'):
+                results['providers']['openai_analysis'] = {
+                    'analysis': gpt_result.get('response', ''),
+                    'model': 'gpt-4o',
+                    'status': 'success'
+                }
+        except Exception as e:
+            results['providers']['openai_analysis'] = {
+                'status': 'error',
+                'error': str(e)
+            }
+        
+        return results
+    
+    def get_market_sentiment_multi_analysis(self, market_data: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Get market sentiment analysis from multiple AI providers
+        """
+        results = {
+            'market_data': market_data,
+            'providers': {},
+            'timestamp': datetime.now().isoformat()
+        }
+        
+        # Claude market sentiment
+        if self.claude_provider and self.claude_provider.is_available():
+            try:
+                claude_result = self.claude_provider.market_sentiment_analysis(market_data)
+                if not claude_result.get('error'):
+                    results['providers']['claude_sentiment'] = {
+                        'analysis': claude_result.get('sentiment_analysis', ''),
+                        'model': claude_result.get('model', 'claude-sonnet-4'),
+                        'status': 'success'
+                    }
+            except Exception as e:
+                results['providers']['claude_sentiment'] = {
+                    'status': 'error',
+                    'error': str(e)
+                }
+        
+        # Grok opportunity analysis
+        if self.grok_provider and self.grok_provider.is_available():
+            try:
+                grok_result = self.grok_provider.market_opportunity_analysis(market_data)
+                if not grok_result.get('error'):
+                    results['providers']['grok_opportunity'] = {
+                        'analysis': grok_result.get('opportunity_analysis', ''),
+                        'model': grok_result.get('model', 'grok-2'),
+                        'status': 'success'
+                    }
+            except Exception as e:
+                results['providers']['grok_opportunity'] = {
+                    'status': 'error',
+                    'error': str(e)
+                }
+        
+        # Grok sentiment analysis
+        if self.grok_provider and self.grok_provider.is_available():
+            try:
+                market_summary = json.dumps(market_data)
+                grok_sentiment = self.grok_provider.sentiment_analysis(market_summary)
+                if not grok_sentiment.get('error'):
+                    results['providers']['grok_sentiment'] = {
+                        'rating': grok_sentiment.get('rating'),
+                        'confidence': grok_sentiment.get('confidence'),
+                        'model': grok_sentiment.get('model', 'grok-2'),
+                        'status': 'success'
+                    }
+            except Exception as e:
+                results['providers']['grok_sentiment'] = {
+                    'status': 'error',
+                    'error': str(e)
+                }
+        
+        return results
+    
+    def get_compliance_analysis(self, scenario: str, jurisdiction: str = "US") -> Dict[str, Any]:
+        """
+        Get compliance analysis using Claude (specialized for regulatory analysis)
+        """
+        results = {
+            'scenario': scenario,
+            'jurisdiction': jurisdiction,
+            'timestamp': datetime.now().isoformat()
+        }
+        
+        if self.claude_provider and self.claude_provider.is_available():
+            try:
+                claude_result = self.claude_provider.compliance_analysis(scenario, jurisdiction)
+                if not claude_result.get('error'):
+                    results['compliance_analysis'] = claude_result.get('compliance_analysis', '')
+                    results['model'] = claude_result.get('model', 'claude-sonnet-4')
+                    results['status'] = 'success'
+                    results['provider'] = 'claude'
+                else:
+                    results['status'] = 'error'
+                    results['error'] = claude_result.get('error', 'Unknown error')
+            except Exception as e:
+                results['status'] = 'error'
+                results['error'] = str(e)
+        else:
+            results['status'] = 'error'
+            results['error'] = 'Claude provider not available'
+        
+        return results
+    
+    def test_enhanced_providers(self) -> Dict[str, Any]:
+        """
+        Test all enhanced AI providers
+        """
+        results = {
+            'timestamp': datetime.now().isoformat(),
+            'providers': {}
+        }
+        
+        # Test Claude
+        if self.claude_provider:
+            try:
+                claude_test = self.claude_provider.test_connection()
+                results['providers']['claude'] = claude_test
+            except Exception as e:
+                results['providers']['claude'] = {
+                    'connected': False,
+                    'error': str(e)
+                }
+        else:
+            results['providers']['claude'] = {
+                'connected': False,
+                'error': 'Provider not initialized'
+            }
+        
+        # Test Grok
+        if self.grok_provider:
+            try:
+                grok_test = self.grok_provider.test_connection()
+                results['providers']['grok'] = grok_test
+            except Exception as e:
+                results['providers']['grok'] = {
+                    'connected': False,
+                    'error': str(e)
+                }
+        else:
+            results['providers']['grok'] = {
+                'connected': False,
+                'error': 'Provider not initialized'
+            }
+        
+        # Test OpenAI (existing)
+        try:
+            openai_test = self.test_assistants()
+            results['providers']['openai'] = {
+                'assistants': openai_test,
+                'connected': any(openai_test.values()),
+                'status': 'success'
+            }
+        except Exception as e:
+            results['providers']['openai'] = {
+                'connected': False,
+                'error': str(e)
+            }
+        
+        return results
+    
+    def get_provider_status(self) -> Dict[str, Any]:
+        """
+        Get status of all AI providers
+        """
+        status = {
+            'timestamp': datetime.now().isoformat(),
+            'providers': {}
+        }
+        
+        # OpenAI status
+        status['providers']['openai'] = {
+            'available': bool(self.openai_api_key),
+            'assistants': len(self.assistants),
+            'capabilities': list(self.assistant_configs.keys())
+        }
+        
+        # Claude status
+        if self.claude_provider:
+            status['providers']['claude'] = self.claude_provider.get_status()
+        else:
+            status['providers']['claude'] = {
+                'available': False,
+                'error': 'Provider not initialized'
+            }
+        
+        # Grok status  
+        if self.grok_provider:
+            status['providers']['grok'] = self.grok_provider.get_status()
+        else:
+            status['providers']['grok'] = {
+                'available': False,
+                'error': 'Provider not initialized'
+            }
+        
+        return status

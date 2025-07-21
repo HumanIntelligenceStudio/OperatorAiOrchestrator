@@ -8,6 +8,15 @@ from health_monitor import HealthMonitor
 from sports_data_provider import SportsDataProvider
 from exchange_rate_provider import get_exchange_rate_provider
 
+# Import AI providers (with fallback handling)
+try:
+    from ai_providers_enhanced import AIProviderManager
+    ai_provider_manager = None
+except ImportError:
+    logging.warning("AI providers not available - some endpoints will be disabled")
+    AIProviderManager = None
+    ai_provider_manager = None
+
 # Create API blueprint for headless backend
 api_bp = Blueprint('api', __name__)
 
@@ -29,6 +38,17 @@ def get_health_monitor():
 
 def get_sports_data_provider():
     return SportsDataProvider()
+
+def get_ai_provider():
+    """Get AI provider manager instance"""
+    global ai_provider_manager
+    if ai_provider_manager is None and AIProviderManager:
+        try:
+            ai_provider_manager = AIProviderManager()
+        except Exception as e:
+            logging.error(f"Failed to initialize AI provider manager: {e}")
+            return None
+    return ai_provider_manager
 
 @api_bp.route('/status', methods=['GET'])
 def system_status():
@@ -403,4 +423,83 @@ def get_supported_currencies():
             "status": "error",
             "message": str(e)
         }), 500
+
+
+# Enhanced Multi-Provider AI Endpoints
+
+@api_bp.route('/ai/multi-provider-analysis', methods=['POST'])
+def multi_provider_analysis():
+    """Get analysis from multiple AI providers"""
+    try:
+        data = request.json
+        query = data.get('query')
+        domain = data.get('domain', 'financial')
+        context = data.get('context')
+        
+        if not query:
+            return jsonify({
+                'success': False,
+                'error': 'Query is required'
+            }), 400
+        
+        # Get multi-provider analysis
+        ai_manager = get_ai_provider()
+        result = ai_manager.get_multi_provider_analysis(query, domain, context)
+        
+        return jsonify({
+            'success': True,
+            'data': result,
+            'timestamp': datetime.now().isoformat()
+        })
+        
+    except Exception as e:
+        logging.error(f"Multi-provider analysis error: {e}")
+        return jsonify({
+            'success': False,
+            'error': str(e),
+            'timestamp': datetime.now().isoformat()
+        }), 500
+
+@api_bp.route('/ai/providers/test', methods=['GET'])
+def test_enhanced_providers():
+    """Test all enhanced AI providers"""
+    try:
+        ai_manager = get_ai_provider()
+        result = ai_manager.test_enhanced_providers()
+        
+        return jsonify({
+            'success': True,
+            'data': result,
+            'timestamp': datetime.now().isoformat()
+        })
+        
+    except Exception as e:
+        logging.error(f"Provider test error: {e}")
+        return jsonify({
+            'success': False,
+            'error': str(e),
+            'timestamp': datetime.now().isoformat()
+        }), 500
+
+@api_bp.route('/ai/providers/status', methods=['GET'])
+def ai_provider_status():
+    """Get status of all AI providers"""
+    try:
+        ai_manager = get_ai_provider()
+        result = ai_manager.get_provider_status()
+        
+        return jsonify({
+            'success': True,
+            'data': result,
+            'timestamp': datetime.now().isoformat()
+        })
+        
+    except Exception as e:
+        logging.error(f"Provider status error: {e}")
+        return jsonify({
+            'success': False,
+            'error': str(e),
+            'timestamp': datetime.now().isoformat()
+        }), 500
+
 
