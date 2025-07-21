@@ -64,11 +64,17 @@ The system maintains conversation context across sessions and provides real-time
 - **Anthropic API**: Claude Sonnet model integration
 - **Environment Variables**: `OPENAI_API_KEY` and `ANTHROPIC_API_KEY` required
 
-### Sports Data Integration (NEW)
+### Sports Data Integration
 - **Alpha Vantage API**: Sports betting odds, team performance, player statistics
 - **Polygon.io API**: Advanced market data for sports-related stocks
 - **Environment Variables**: `ALPHA_API_KEY` and `POLYGON_KEY` integrated
 - **Real-time Data**: Live sports scores, betting odds, market analysis
+
+### Exchange Rate Integration (NEW)
+- **ExchangeRate-API**: Real-time currency conversion across 168+ currencies
+- **Free API Fallbacks**: exchangerate.host and static demo rates for reliability
+- **Environment Variable**: `EXCHANGERATE_KEY` configured with fallback systems
+- **Financial Integration**: Multi-currency support for international operations
 
 ### System Dependencies
 - **Flask**: Web framework for API backend
