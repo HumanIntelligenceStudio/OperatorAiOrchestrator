@@ -6,6 +6,7 @@ from app import db
 from agent_master_controller import AgentMasterController
 from health_monitor import HealthMonitor
 from sports_data_provider import SportsDataProvider
+from exchange_rate_provider import get_exchange_rate_provider
 
 # Create API blueprint for headless backend
 api_bp = Blueprint('api', __name__)
@@ -309,6 +310,95 @@ def get_market_data(symbol):
         
     except Exception as e:
         logging.error(f"Error fetching market data: {e}")
+        return jsonify({
+            "status": "error",
+            "message": str(e)
+        }), 500
+
+
+# Exchange Rate API Endpoints
+@api_bp.route("/exchange/status", methods=["GET"])
+def get_exchange_status():
+    """Get exchange rate API status"""
+    try:
+        exchange_provider = get_exchange_rate_provider()
+        status = exchange_provider.get_api_status()
+        
+        return jsonify({
+            "status": "success",
+            "data": status
+        }), 200
+        
+    except Exception as e:
+        logging.error(f"Error getting exchange rate status: {e}")
+        return jsonify({
+            "status": "error",
+            "message": str(e)
+        }), 500
+
+@api_bp.route("/exchange/rates", methods=["GET"])
+def get_exchange_rates():
+    """Get latest exchange rates"""
+    base_currency = request.args.get("base", "USD")
+    
+    try:
+        exchange_provider = get_exchange_rate_provider()
+        rates = exchange_provider.get_latest_rates(base_currency.upper())
+        
+        return jsonify({
+            "status": "success",
+            "data": rates
+        }), 200
+        
+    except Exception as e:
+        logging.error(f"Error getting exchange rates: {e}")
+        return jsonify({
+            "status": "error",
+            "message": str(e)
+        }), 500
+
+@api_bp.route("/exchange/convert", methods=["GET"])
+def convert_currency():
+    """Convert currency amount"""
+    try:
+        amount = float(request.args.get("amount", 1))
+        from_currency = request.args.get("from", "USD").upper()
+        to_currency = request.args.get("to", "EUR").upper()
+        
+        exchange_provider = get_exchange_rate_provider()
+        conversion = exchange_provider.convert_currency(amount, from_currency, to_currency)
+        
+        return jsonify({
+            "status": "success",
+            "data": conversion
+        }), 200
+        
+    except ValueError as e:
+        return jsonify({
+            "status": "error",
+            "message": "Invalid amount parameter"
+        }), 400
+    except Exception as e:
+        logging.error(f"Error converting currency: {e}")
+        return jsonify({
+            "status": "error",
+            "message": str(e)
+        }), 500
+
+@api_bp.route("/exchange/currencies", methods=["GET"])
+def get_supported_currencies():
+    """Get list of supported currencies"""
+    try:
+        exchange_provider = get_exchange_rate_provider()
+        currencies = exchange_provider.get_supported_currencies()
+        
+        return jsonify({
+            "status": "success",
+            "data": currencies
+        }), 200
+        
+    except Exception as e:
+        logging.error(f"Error getting supported currencies: {e}")
         return jsonify({
             "status": "error",
             "message": str(e)
