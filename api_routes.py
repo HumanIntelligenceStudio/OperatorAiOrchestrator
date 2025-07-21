@@ -5,6 +5,7 @@ from models import Agent, Task, SystemMetrics, AgentPool, User, Conversation
 from app import db
 from agent_master_controller import AgentMasterController
 from health_monitor import HealthMonitor
+from sports_data_provider import SportsDataProvider
 
 # Create API blueprint for headless backend
 api_bp = Blueprint('api', __name__)
@@ -24,6 +25,9 @@ def get_health_monitor():
     if health_monitor is None:
         health_monitor = HealthMonitor()
     return health_monitor
+
+def get_sports_data_provider():
+    return SportsDataProvider()
 
 @api_bp.route('/status', methods=['GET'])
 def system_status():
@@ -227,3 +231,45 @@ def get_metrics():
             'status': 'error',
             'message': str(e)
         }), 500
+
+
+@api_bp.route("/sports/odds/<sport>", methods=["GET"])
+def get_sports_odds(sport):
+    """Get live sports betting odds"""
+    try:
+        sports_provider = get_sports_data_provider()
+        odds_data = sports_provider.get_sports_betting_odds(sport.upper())
+        
+        return jsonify({
+            "status": "success",
+            "data": odds_data,
+            "sport": sport,
+            "timestamp": datetime.utcnow().isoformat()
+        }), 200
+        
+    except Exception as e:
+        logging.error(f"Error fetching sports odds: {e}")
+        return jsonify({
+            "status": "error",
+            "message": str(e)
+        }), 500
+
+@api_bp.route("/sports/features", methods=["GET"])
+def get_sports_features():
+    """Get available sports data features"""
+    try:
+        sports_provider = get_sports_data_provider()
+        features = sports_provider.get_available_features()
+        
+        return jsonify({
+            "status": "success",
+            "data": features
+        }), 200
+        
+    except Exception as e:
+        logging.error(f"Error fetching sports features: {e}")
+        return jsonify({
+            "status": "error",
+            "message": str(e)
+        }), 500
+

@@ -3,6 +3,7 @@ import random
 from typing import Dict, List, Optional, Any
 from datetime import datetime
 from ai_providers_enhanced import AIProviderManager
+from sports_data_provider import SportsDataProvider
 
 class SpecializedAgentPools:
     """
@@ -12,6 +13,7 @@ class SpecializedAgentPools:
     
     def __init__(self):
         self.ai_provider_manager = AIProviderManager()
+        self.sports_data = SportsDataProvider()
         
         # Pool configurations
         self.pool_configs = {
@@ -190,11 +192,14 @@ class SpecializedAgentPools:
                 'investment_risks_emphasis': True
             })
         elif pool_type == 'sports':
+            # Add real-time sports data context
+            sports_context = self._get_sports_data_context(query)
             base_context.update({
                 'statistical_analysis': True,
                 'confidence_levels': True,
                 'responsible_gambling': True,
-                'current_season_context': True
+                'current_season_context': True,
+                'real_time_data': sports_context
             })
         elif pool_type == 'business':
             base_context.update({
@@ -316,11 +321,11 @@ class SpecializedAgentPools:
                 "Is this a good time to buy real estate?"
             ],
             'sports': [
-                "Predict tonight's NBA games",
-                "Who should I start in fantasy football this week?",
-                "What are the odds for the Super Bowl?",
-                "Analyze LeBron James' recent performance",
-                "Create a betting strategy for tonight's games"
+                "Predict tonight's NBA games with current odds",
+                "Show me live sports betting odds for Lakers vs Warriors",
+                "Analyze team performance data for the Patriots",
+                "Get current player statistics for LeBron James",
+                "What are the live scores for today's games?"
             ],
             'business': [
                 "Help me optimize my team's workflow",
@@ -339,6 +344,68 @@ class SpecializedAgentPools:
         }
         
         return samples.get(pool_type, [])
+    
+    def _get_sports_data_context(self, query: str) -> Dict[str, Any]:
+        """Get real-time sports data context for enhanced analysis"""
+        try:
+            # Extract sports information from query
+            context = {
+                "data_available": self.sports_data.get_available_features(),
+                "real_time_capabilities": True,
+                "last_updated": datetime.now().isoformat()
+            }
+            
+            # Check if query mentions specific teams, players, or sports
+            query_lower = query.lower()
+            
+            # Detect sport type
+            sport = "NBA"  # Default
+            if any(keyword in query_lower for keyword in ["nfl", "football"]):
+                sport = "NFL"
+            elif any(keyword in query_lower for keyword in ["mlb", "baseball"]):
+                sport = "MLB"
+            elif any(keyword in query_lower for keyword in ["nhl", "hockey"]):
+                sport = "NHL"
+            
+            context["detected_sport"] = sport
+            
+            # Get relevant real-time data based on query type
+            if any(keyword in query_lower for keyword in ["odds", "bet", "spread", "line"]):
+                betting_data = self.sports_data.get_sports_betting_odds(sport)
+                context["betting_odds"] = betting_data
+                
+            if any(keyword in query_lower for keyword in ["score", "live", "game", "match"]):
+                live_scores = self.sports_data.get_live_scores(sport)
+                context["live_scores"] = live_scores
+                
+            # Extract team names (basic pattern matching)
+            common_teams = {
+                "NBA": ["lakers", "warriors", "bulls", "celtics", "heat", "spurs", "nets", "knicks"],
+                "NFL": ["chiefs", "patriots", "cowboys", "packers", "steelers", "49ers"],
+                "MLB": ["yankees", "dodgers", "red sox", "giants", "cubs"],
+                "NHL": ["rangers", "bruins", "blackhawks", "kings"]
+            }
+            
+            detected_teams = []
+            for team in common_teams.get(sport, []):
+                if team in query_lower:
+                    detected_teams.append(team.title())
+                    
+            if detected_teams:
+                context["detected_teams"] = detected_teams
+                # Get team performance data for first detected team
+                team_data = self.sports_data.get_team_performance_metrics(detected_teams[0], sport)
+                context["team_performance"] = team_data
+            
+            return context
+            
+        except Exception as e:
+            logging.error(f"Error getting sports data context: {e}")
+            return {
+                "error": "Unable to fetch real-time sports data",
+                "fallback": True,
+                "data_available": False
+            }
 
     def process_demo_request(self, pool_type: str, user_id: int) -> Dict[str, Any]:
         """Process a demo request for a specific agent pool"""
