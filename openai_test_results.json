@@ -1,0 +1,30 @@
+{
+  "openai_connection": true,
+  "assistants_api": true,
+  "agent_pools": false,
+  "conversation_persistence": false,
+  "timestamp": "2025-07-21T21:14:18.697013",
+  "assistant_demo": {
+    "success": true,
+    "assistant_id": "asst_vVtzkynC7l8hyFMncchQyO46",
+    "thread_id": "thread_o02k6pYtrr2fgCkvoYUy9zzq",
+    "conversation_history": [
+      {
+        "user": "Hello, I'm testing the OperatorOS assistant integration.",
+        "assistant": "Great! I'm here to help you with the testing process. Let me know what you'd like to test or if you need assistance with anything specific.",
+        "timestamp": "2025-07-21T21:14:31.586787"
+      },
+      {
+        "user": "Can you remember what I just said about testing?",
+        "assistant": "Yes, you mentioned that you're testing the OperatorOS assistant integration. If there\u2019s anything specific within this test you\u2019d like to focus on, feel free to let me know!",
+        "timestamp": "2025-07-21T21:14:35.597359"
+      },
+      {
+        "user": "What system are we testing?",
+        "assistant": "We are testing the OperatorOS assistant integration.",
+        "timestamp": "2025-07-21T21:14:39.569311"
+      }
+    ]
+  },
+  "agent_tests": []
+}

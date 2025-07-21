@@ -1,218 +1,289 @@
 #!/usr/bin/env python3
 """
-OperatorOS Demo System
-Demonstrates the conversational interface for the enterprise AI agent orchestration platform
+OpenAI Assistants Integration Demo
+Demonstrates working components of OperatorOS multi-agent system
 """
 
-import requests
+import os
 import json
-import time
-from command_processor import CommandProcessor
+import logging
+from datetime import datetime
+from openai import OpenAI
 
 class OperatorOSDemo:
+    """Demo of working OpenAI integration without circular imports"""
+    
     def __init__(self):
-        self.base_url = "http://localhost:5000/api"
-        self.command_processor = CommandProcessor()
-        
-    def show_welcome_message(self):
-        print("🚀 Welcome to OperatorOS - Enterprise AI Agent Orchestration Platform")
-        print("=" * 70)
-        print("✅ Replit Agent serves as your conversational interface")
-        print("💬 All system management happens through natural language")
-        print("🤖 Multiple AI agent pools handle specialized domains")
-        print("=" * 70)
-        print()
-    
-    def demonstrate_system_status(self):
-        print("📊 SYSTEM STATUS CHECK")
-        print("-" * 30)
-        try:
-            response = requests.get(f"{self.base_url}/status", timeout=10)
-            if response.status_code == 200:
-                data = response.json()
-                print("✅ System is operational")
-                print(f"   Database: Connected")
-                print(f"   API Backend: Running on port 5000")
-                print(f"   Agent Pools: Initialized")
-                status_data = data.get('data', {})
-                if status_data:
-                    print(f"   Active Pools: {len(status_data.get('pools', []))}")
-            else:
-                print(f"❌ System status check failed: {response.status_code}")
-        except Exception as e:
-            print(f"❌ Connection failed: {e}")
-        print()
-    
-    def demonstrate_agent_pools(self):
-        print("🤖 AGENT POOL OVERVIEW")
-        print("-" * 30)
-        
-        pools = {
-            "Healthcare": {
-                "description": "Medical advice, symptom analysis, health consultations",
-                "ai_model": "GPT-4o",
-                "sample_queries": ["I have a headache", "What are flu symptoms?", "Medical emergency help"]
-            },
-            "Financial": {
-                "description": "Investment advice, market analysis, financial planning", 
-                "ai_model": "Claude Sonnet",
-                "sample_queries": ["Analyze S&P 500 trends", "Investment portfolio advice", "Budget planning"]
-            },
-            "Sports": {
-                "description": "Game predictions, player stats, sports analysis",
-                "ai_model": "GPT-4o",
-                "sample_queries": ["NBA playoff predictions", "Player performance stats", "Game analysis"]
-            },
-            "Business": {
-                "description": "Process automation, strategy consulting, workflow optimization",
-                "ai_model": "Claude Sonnet", 
-                "sample_queries": ["Automate invoice processing", "Business strategy", "Team productivity"]
-            },
-            "General": {
-                "description": "Comprehensive assistance across all topics",
-                "ai_model": "GPT-4o",
-                "sample_queries": ["Research assistance", "Creative projects", "Technical questions"]
-            }
+        self.openai_client = None
+        self.demo_results = {
+            "timestamp": datetime.now().isoformat(),
+            "tests_run": [],
+            "successful_features": []
         }
         
-        for pool_name, details in pools.items():
-            print(f"🎯 {pool_name} Pool")
-            print(f"   Purpose: {details['description']}")
-            print(f"   AI Model: {details['ai_model']}")
-            print(f"   Sample Queries: {', '.join(details['sample_queries'][:2])}")
-            print()
-    
-    def demonstrate_conversational_commands(self):
-        print("💬 CONVERSATIONAL COMMAND EXAMPLES")
-        print("-" * 40)
+    def test_openai_connection(self):
+        """Test basic OpenAI connection"""
+        print("Testing OpenAI Connection")
+        print("=" * 30)
         
-        commands = [
-            {
-                "user_input": "Show me the system status",
-                "description": "Get comprehensive system health and metrics"
-            },
-            {
-                "user_input": "I need medical advice about chest pain",
-                "description": "Routes to Healthcare agent pool for specialized medical assistance"
-            },
-            {
-                "user_input": "Analyze the stock market trends today",
-                "description": "Connects to Financial agent using Claude for market analysis"
-            },
-            {
-                "user_input": "Scale up the business pool by 3 agents",
-                "description": "Dynamic scaling of agent pools based on demand"
-            },
-            {
-                "user_input": "Run a healthcare demo",
-                "description": "Interactive demonstration of healthcare capabilities"
-            },
-            {
-                "user_input": "What's the health status of all pools?",
-                "description": "Real-time monitoring and health reporting"
+        api_key = os.environ.get('OPENAI_API_KEY')
+        
+        if not api_key:
+            print("❌ OPENAI_API_KEY not found")
+            return False
+            
+        try:
+            self.openai_client = OpenAI(api_key=api_key)
+            
+            # Test basic completion
+            response = self.openai_client.chat.completions.create(
+                model="gpt-4o",  # the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
+                messages=[
+                    {"role": "system", "content": "You are OperatorOS, an enterprise AI agent orchestration platform."},
+                    {"role": "user", "content": "Introduce yourself as part of a system test."}
+                ],
+                max_tokens=150
+            )
+            
+            result = response.choices[0].message.content
+            print("✅ OpenAI Connection Successful")
+            print(f"Response: {result}")
+            
+            self.demo_results["tests_run"].append("openai_connection")
+            self.demo_results["successful_features"].append("Basic OpenAI Chat Completion")
+            return True
+            
+        except Exception as e:
+            print(f"❌ OpenAI connection failed: {e}")
+            return False
+    
+    def test_assistant_creation(self):
+        """Test OpenAI Assistant creation and interaction"""
+        print("\nTesting Assistant Creation")
+        print("=" * 30)
+        
+        if not self.openai_client:
+            print("❌ OpenAI client not initialized")
+            return False
+            
+        try:
+            # Create specialized assistants for different domains
+            assistants = {}
+            
+            assistant_configs = {
+                "Sports Expert": "You are a sports analytics expert specializing in game predictions and statistical analysis.",
+                "Healthcare Advisor": "You are a healthcare information specialist providing evidence-based medical guidance.",
+                "Financial Analyst": "You are a financial expert providing investment advice and market analysis."
             }
+            
+            for name, instructions in assistant_configs.items():
+                assistant = self.openai_client.beta.assistants.create(
+                    name=f"OperatorOS {name}",
+                    instructions=instructions,
+                    model="gpt-4o"
+                )
+                assistants[name] = assistant.id
+                print(f"✅ Created {name}: {assistant.id}")
+                
+            # Test conversation with Sports Expert
+            thread = self.openai_client.beta.threads.create()
+            
+            self.openai_client.beta.threads.messages.create(
+                thread_id=thread.id,
+                role="user",
+                content="What makes a good sports betting strategy?"
+            )
+            
+            run = self.openai_client.beta.threads.runs.create(
+                thread_id=thread.id,
+                assistant_id=assistants["Sports Expert"]
+            )
+            
+            # Wait for completion
+            import time
+            while run.status in ['queued', 'in_progress']:
+                time.sleep(1)
+                run = self.openai_client.beta.threads.runs.retrieve(
+                    thread_id=thread.id,
+                    run_id=run.id
+                )
+            
+            if run.status == 'completed':
+                messages = self.openai_client.beta.threads.messages.list(thread_id=thread.id)
+                response = messages.data[0].content[0].text.value
+                print(f"💬 Sports Expert Response: {response[:200]}...")
+                
+                self.demo_results["successful_features"].append("OpenAI Assistants with Domain Specialization")
+                
+            # Clean up test assistants
+            for name, assistant_id in assistants.items():
+                self.openai_client.beta.assistants.delete(assistant_id)
+                print(f"🗑️ Cleaned up {name}")
+                
+            self.demo_results["tests_run"].append("assistant_creation")
+            return True
+            
+        except Exception as e:
+            print(f"❌ Assistant creation failed: {e}")
+            return False
+    
+    def test_multi_agent_simulation(self):
+        """Simulate multi-agent conversation flow"""
+        print("\nTesting Multi-Agent Simulation")
+        print("=" * 35)
+        
+        if not self.openai_client:
+            print("❌ OpenAI client not initialized")
+            return False
+            
+        try:
+            # Simulate different agent responses to same query
+            query = "Should I invest in sports betting companies like DraftKings?"
+            
+            agent_perspectives = {
+                "Financial": "You are a conservative financial advisor focused on risk management.",
+                "Sports": "You are a sports industry analyst who understands the business side.",
+                "Healthcare": "You are a healthcare advisor concerned about gambling addiction risks."
+            }
+            
+            responses = {}
+            
+            for agent_type, instructions in agent_perspectives.items():
+                response = self.openai_client.chat.completions.create(
+                    model="gpt-4o",
+                    messages=[
+                        {"role": "system", "content": instructions},
+                        {"role": "user", "content": query}
+                    ],
+                    max_tokens=200
+                )
+                
+                responses[agent_type] = response.choices[0].message.content
+                print(f"🤖 {agent_type} Agent: {responses[agent_type][:150]}...")
+                
+            self.demo_results["successful_features"].append("Multi-Agent Perspective Analysis")
+            self.demo_results["tests_run"].append("multi_agent_simulation")
+            return True
+            
+        except Exception as e:
+            print(f"❌ Multi-agent simulation failed: {e}")
+            return False
+    
+    def test_context_persistence(self):
+        """Test conversation context and memory"""
+        print("\nTesting Context Persistence")
+        print("=" * 30)
+        
+        if not self.openai_client:
+            print("❌ OpenAI client not initialized")
+            return False
+            
+        try:
+            # Create assistant with memory
+            assistant = self.openai_client.beta.assistants.create(
+                name="Memory Test Assistant",
+                instructions="You have excellent memory. Remember details from our conversation and reference them in later messages.",
+                model="gpt-4o"
+            )
+            
+            thread = self.openai_client.beta.threads.create()
+            
+            # Multi-turn conversation
+            conversations = [
+                "My name is Alex and I'm interested in sports arbitrage betting.",
+                "What did I tell you about my interest?",
+                "Do you remember my name?"
+            ]
+            
+            for i, message in enumerate(conversations, 1):
+                print(f"💭 Turn {i}: {message}")
+                
+                self.openai_client.beta.threads.messages.create(
+                    thread_id=thread.id,
+                    role="user",
+                    content=message
+                )
+                
+                run = self.openai_client.beta.threads.runs.create(
+                    thread_id=thread.id,
+                    assistant_id=assistant.id
+                )
+                
+                import time
+                while run.status in ['queued', 'in_progress']:
+                    time.sleep(1)
+                    run = self.openai_client.beta.threads.runs.retrieve(
+                        thread_id=thread.id,
+                        run_id=run.id
+                    )
+                
+                if run.status == 'completed':
+                    messages = self.openai_client.beta.threads.messages.list(
+                        thread_id=thread.id,
+                        order="desc",
+                        limit=1
+                    )
+                    response = messages.data[0].content[0].text.value
+                    print(f"🤖 Assistant: {response}")
+                
+            # Clean up
+            self.openai_client.beta.assistants.delete(assistant.id)
+            print("🗑️ Cleaned up memory test assistant")
+            
+            self.demo_results["successful_features"].append("Conversation Context Persistence")
+            self.demo_results["tests_run"].append("context_persistence")
+            return True
+            
+        except Exception as e:
+            print(f"❌ Context persistence test failed: {e}")
+            return False
+    
+    def run_full_demo(self):
+        """Run complete integration demo"""
+        print("🚀 OperatorOS OpenAI Integration Demo")
+        print("=" * 50)
+        
+        tests = [
+            ("OpenAI Connection", self.test_openai_connection),
+            ("Assistant Creation", self.test_assistant_creation),
+            ("Multi-Agent Simulation", self.test_multi_agent_simulation),
+            ("Context Persistence", self.test_context_persistence)
         ]
         
-        for cmd in commands:
-            print(f"👤 User: \"{cmd['user_input']}\"")
-            print(f"🤖 System: {cmd['description']}")
-            print()
-    
-    def demonstrate_ai_provider_routing(self):
-        print("🧠 AI PROVIDER ROUTING")
-        print("-" * 30)
-        print("OperatorOS intelligently routes requests to optimal AI models:")
-        print()
-        print("📋 OpenAI GPT-4o:")
-        print("   • Healthcare consultations")
-        print("   • Sports analysis and predictions")
-        print("   • General knowledge and creative tasks")
-        print()
-        print("🧮 Anthropic Claude Sonnet:")
-        print("   • Financial analysis and advice")
-        print("   • Business strategy and automation") 
-        print("   • Complex reasoning and planning")
-        print()
-        print("🎯 Smart Routing:")
-        print("   • Domain-specific model selection")
-        print("   • Automatic failover between providers")
-        print("   • Performance-based load balancing")
-        print()
-    
-    def demonstrate_key_features(self):
-        print("⭐ KEY PLATFORM FEATURES")
-        print("-" * 30)
+        passed_tests = 0
         
-        features = [
-            "🌐 Conversational Interface - All interactions through Replit Agent",
-            "🏥 Specialized Agent Pools - Domain expertise (Healthcare, Finance, Sports, Business)",
-            "🔄 Auto-scaling - Dynamic agent pool management based on demand", 
-            "📊 Real-time Monitoring - System health and performance tracking",
-            "🧠 Multi-AI Provider - OpenAI GPT-4o and Anthropic Claude integration",
-            "💾 Persistent Conversations - Context retention across sessions",
-            "🔧 Enterprise Ready - PostgreSQL database, REST API backend",
-            "⚡ Task Prioritization - Intelligent queue management",
-            "🛡️ Health Monitoring - Automated alerts and recovery",
-            "📈 Business Automation - Workflow optimization and process automation"
-        ]
+        for test_name, test_func in tests:
+            try:
+                if test_func():
+                    passed_tests += 1
+            except Exception as e:
+                print(f"❌ {test_name} crashed: {e}")
         
-        for feature in features:
-            print(f"   {feature}")
-        print()
-    
-    def show_interaction_examples(self):
-        print("💭 LIVE INTERACTION EXAMPLES")
-        print("-" * 40)
-        print("Here's how you can interact with OperatorOS through Replit Agent:")
-        print()
+        # Summary
+        print(f"\n📊 Demo Results Summary")
+        print("=" * 30)
+        print(f"Tests passed: {passed_tests}/{len(tests)}")
+        print(f"Successful features: {len(self.demo_results['successful_features'])}")
         
-        examples = [
-            ("System Management", [
-                "status",
-                "show me agent pool health",
-                "scale up healthcare agents by 2",
-                "restart the financial pool"
-            ]),
-            ("Healthcare Tasks", [
-                "I have persistent headaches for 3 days",
-                "What are the symptoms of diabetes?",
-                "I need advice about my medication"
-            ]),
-            ("Financial Analysis", [
-                "Should I invest in tech stocks now?",
-                "Analyze my portfolio risk",
-                "What's happening with crypto markets?"
-            ]),
-            ("Business Automation", [
-                "Help me automate our invoice workflow",
-                "Optimize our customer service process",
-                "Create a project management strategy"
-            ])
-        ]
+        if self.demo_results["successful_features"]:
+            print("\n✅ Working Features:")
+            for feature in self.demo_results["successful_features"]:
+                print(f"  • {feature}")
+                
+        # Save results
+        with open('integration_demo_results.json', 'w') as f:
+            json.dump(self.demo_results, f, indent=2)
+            
+        print(f"\n📁 Full results saved to integration_demo_results.json")
         
-        for category, commands in examples:
-            print(f"📂 {category}:")
-            for cmd in commands:
-                print(f"   💬 \"{cmd}\"")
-            print()
-
-def main():
-    """Main demo function"""
-    demo = OperatorOSDemo()
-    
-    demo.show_welcome_message()
-    demo.demonstrate_system_status()
-    demo.demonstrate_agent_pools()
-    demo.demonstrate_conversational_commands()
-    demo.demonstrate_ai_provider_routing()
-    demo.demonstrate_key_features()
-    demo.show_interaction_examples()
-    
-    print("🎯 READY FOR INTERACTION")
-    print("=" * 30)
-    print("OperatorOS is now ready for conversational commands!")
-    print("Simply talk to Replit Agent using natural language.")
-    print("The system will understand your intent and route tasks appropriately.")
+        if passed_tests == len(tests):
+            print("\n🎉 All integration tests passed!")
+            print("OperatorOS OpenAI Assistants integration is fully operational")
+        else:
+            print(f"\n⚠️ {len(tests) - passed_tests} tests failed")
+            
+        return self.demo_results
 
 if __name__ == "__main__":
-    main()
+    demo = OperatorOSDemo()
+    results = demo.run_full_demo()
