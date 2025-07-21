@@ -64,6 +64,12 @@ The system maintains conversation context across sessions and provides real-time
 - **Anthropic API**: Claude Sonnet model integration
 - **Environment Variables**: `OPENAI_API_KEY` and `ANTHROPIC_API_KEY` required
 
+### Sports Data Integration (NEW)
+- **Alpha Vantage API**: Sports betting odds, team performance, player statistics
+- **Polygon.io API**: Advanced market data for sports-related stocks
+- **Environment Variables**: `ALPHA_API_KEY` and `POLYGON_KEY` integrated
+- **Real-time Data**: Live sports scores, betting odds, market analysis
+
 ### System Dependencies
 - **Flask**: Web framework for API backend
 - **SQLAlchemy**: Database ORM and migrations

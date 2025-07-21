@@ -273,3 +273,44 @@ def get_sports_features():
             "message": str(e)
         }), 500
 
+
+
+@api_bp.route("/sports/stocks", methods=["GET"])
+def get_sports_stocks():
+    """Get sports-related stock market data"""
+    try:
+        sports_provider = get_sports_data_provider()
+        stocks_data = sports_provider.get_sports_related_stocks()
+        
+        return jsonify({
+            "status": "success",
+            "data": stocks_data
+        }), 200
+        
+    except Exception as e:
+        logging.error(f"Error fetching sports stocks: {e}")
+        return jsonify({
+            "status": "error",
+            "message": str(e)
+        }), 500
+
+@api_bp.route("/sports/market/<symbol>", methods=["GET"])
+def get_market_data(symbol):
+    """Get market data for specific symbol"""
+    try:
+        sports_provider = get_sports_data_provider()
+        market_data = sports_provider.get_polygon_market_data(symbol.upper())
+        
+        return jsonify({
+            "status": "success",
+            "data": market_data,
+            "symbol": symbol.upper()
+        }), 200
+        
+    except Exception as e:
+        logging.error(f"Error fetching market data: {e}")
+        return jsonify({
+            "status": "error",
+            "message": str(e)
+        }), 500
+

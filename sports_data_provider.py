@@ -13,7 +13,7 @@ class SportsDataProvider:
     
     def __init__(self):
         self.alpha_vantage_key = os.environ.get('ALPHA_API_KEY')
-        self.polygon_key = os.environ.get('POLYGON_API_KEY')
+        self.polygon_key = os.environ.get('POLYGON_KEY')
         
         # API endpoints
         self.alpha_base_url = "https://www.alphavantage.co/query"
@@ -344,6 +344,97 @@ class SportsDataProvider:
             logging.error(f"Error in sports news sentiment: {e}")
             return {"error": f"Sentiment analysis error: {str(e)}"}
     
+    def get_polygon_market_data(self, symbol: str) -> Dict[str, Any]:
+        """
+        Get advanced market data from Polygon.io
+        Useful for sports betting markets and related financial data
+        """
+        if not self.polygon_available:
+            return {"error": "Polygon.io API key required for advanced market data"}
+        
+        try:
+            # Get stock data for sports-related companies
+            url = f"{self.polygon_base_url}/v2/aggs/ticker/{symbol}/prev"
+            params = {
+                'apiKey': self.polygon_key
+            }
+            
+            response = requests.get(url, params=params, timeout=10)
+            response.raise_for_status()
+            
+            data = response.json()
+            
+            if data.get('status') == 'ERROR':
+                return {"error": f"Polygon API Error: {data.get('error', 'Unknown error')}"}
+            
+            # Format market data response
+            results = data.get('results', [])
+            if results:
+                market_data = results[0]
+                formatted_data = {
+                    "symbol": symbol,
+                    "last_updated": datetime.now().isoformat(),
+                    "market_data": {
+                        "open": market_data.get('o'),
+                        "close": market_data.get('c'),
+                        "high": market_data.get('h'),
+                        "low": market_data.get('l'),
+                        "volume": market_data.get('v'),
+                        "timestamp": market_data.get('t')
+                    },
+                    "analysis": {
+                        "day_change": market_data.get('c', 0) - market_data.get('o', 0),
+                        "day_change_percent": ((market_data.get('c', 0) - market_data.get('o', 0)) / market_data.get('o', 1)) * 100
+                    }
+                }
+                return formatted_data
+            else:
+                return {"error": "No market data available"}
+            
+        except requests.exceptions.RequestException as e:
+            logging.error(f"Error fetching Polygon market data: {e}")
+            return {"error": f"Network error: {str(e)}"}
+        except Exception as e:
+            logging.error(f"Unexpected error in Polygon market data: {e}")
+            return {"error": f"Unexpected error: {str(e)}"}
+    
+    def get_sports_related_stocks(self) -> Dict[str, Any]:
+        """
+        Get market data for sports-related stocks
+        """
+        if not self.polygon_available:
+            return {"error": "Polygon.io API key required for stock market data"}
+        
+        # Sports-related stock symbols
+        sports_stocks = {
+            "DIS": "Disney (ESPN)",
+            "NFLX": "Netflix (Sports Content)",
+            "DKNG": "DraftKings",
+            "PENN": "Penn Entertainment",
+            "MGM": "MGM Resorts",
+            "FUBO": "FuboTV"
+        }
+        
+        market_data = {}
+        
+        for symbol, company in sports_stocks.items():
+            try:
+                stock_data = self.get_polygon_market_data(symbol)
+                if not stock_data.get('error'):
+                    market_data[symbol] = {
+                        "company": company,
+                        "data": stock_data
+                    }
+            except Exception as e:
+                logging.warning(f"Could not fetch data for {symbol}: {e}")
+                continue
+        
+        return {
+            "sports_related_stocks": market_data,
+            "last_updated": datetime.now().isoformat(),
+            "total_symbols": len(market_data)
+        }
+    
     def get_available_features(self) -> Dict[str, Any]:
         """Return information about available sports data features"""
         return {
@@ -361,6 +452,6 @@ class SportsDataProvider:
             "supported_sports": ["NBA", "NFL", "MLB", "NHL", "NCAA"],
             "api_status": {
                 "alpha_vantage": "Connected" if self.alpha_available else "API Key Required",
-                "polygon_io": "Connected" if self.polygon_available else "API Key Required"
+                "polygon_io": "Connected" if self.polygon_available else "API Key Required (use POLYGON_KEY)"
             }
         }
