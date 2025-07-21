@@ -1,0 +1,34 @@
+{
+  "timestamp": "2025-07-21T21:51:55.338792",
+  "scenario": "fintech_investment_analysis",
+  "providers_tested": [
+    "claude",
+    "grok"
+  ],
+  "successful_providers": [
+    "claude",
+    "grok"
+  ],
+  "results": {
+    "claude": {
+      "status": "success",
+      "model": "claude-sonnet-4-20250514",
+      "analysis_length": 3963,
+      "key_areas": [
+        "Valuation assessment included",
+        "Risk factors identified",
+        "Revenue analysis completed"
+      ]
+    },
+    "grok": {
+      "status": "success",
+      "model": "grok-2-1212",
+      "analysis_length": 4928,
+      "strategic_areas": [
+        "Market analysis",
+        "Competitive positioning",
+        "Strategic recommendations"
+      ]
+    }
+  }
+}

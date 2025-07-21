@@ -1,0 +1,10 @@
+{
+  "claude": {
+    "status": "success",
+    "model": "claude-sonnet-4-20250514"
+  },
+  "grok": {
+    "status": "success",
+    "model": "grok-2-1212"
+  }
+}
