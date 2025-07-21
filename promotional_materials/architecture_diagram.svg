@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1400" height="800" viewBox="0 0 1400 800" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f8f9fa;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e9ecef;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="claudeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff6b35;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ff4500;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="grokGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00d4aa;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#008080;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="openaiGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10a37f;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a7f64;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="coreGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6c5ce7;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#5f3dc4;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="2" dy="2" stdDeviation="4" flood-color="#00000020"/>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1400" height="800" fill="url(#bgGradient)"/>
+  
+  <!-- Title -->
+  <text x="700" y="40" font-family="Arial, sans-serif" font-size="28" font-weight="bold" text-anchor="middle" fill="#2d3436">
+    OperatorOS Architecture - Multi-Provider AI Orchestration
+  </text>
+  
+  <!-- User Interface Layer -->
+  <g transform="translate(50, 80)">
+    <rect x="0" y="0" width="1300" height="80" fill="#ffffff" rx="10" stroke="#ddd" stroke-width="2" filter="url(#shadow)"/>
+    <text x="20" y="25" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#2d3436">User Interface Layer</text>
+    
+    <rect x="50" y="35" width="200" height="35" fill="#74b9ff" rx="5"/>
+    <text x="150" y="55" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#ffffff">Replit Agent Interface</text>
+    
+    <rect x="300" y="35" width="180" height="35" fill="#81ecec" rx="5"/>
+    <text x="390" y="55" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#2d3436">Natural Language</text>
+    
+    <rect x="530" y="35" width="150" height="35" fill="#fd79a8" rx="5"/>
+    <text x="605" y="55" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#ffffff">Conversational UI</text>
+  </g>
+  
+  <!-- API Gateway Layer -->
+  <g transform="translate(50, 200)">
+    <rect x="0" y="0" width="1300" height="60" fill="#ffffff" rx="10" stroke="#ddd" stroke-width="2" filter="url(#shadow)"/>
+    <text x="20" y="25" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#2d3436">API Gateway & Orchestration</text>
+    
+    <rect x="50" y="30" width="150" height="25" fill="url(#coreGradient)" rx="3"/>
+    <text x="125" y="45" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#ffffff">Flask API</text>
+    
+    <rect x="220" y="30" width="150" height="25" fill="url(#coreGradient)" rx="3"/>
+    <text x="295" y="45" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#ffffff">Request Router</text>
+    
+    <rect x="390" y="30" width="150" height="25" fill="url(#coreGradient)" rx="3"/>
+    <text x="465" y="45" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#ffffff">Task Processor</text>
+    
+    <rect x="560" y="30" width="150" height="25" fill="url(#coreGradient)" rx="3"/>
+    <text x="635" y="45" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#ffffff">Health Monitor</text>
+  </g>
+  
+  <!-- AI Provider Layer -->
+  <g transform="translate(50, 300)">
+    <rect x="0" y="0" width="1300" height="200" fill="#ffffff" rx="10" stroke="#ddd" stroke-width="2" filter="url(#shadow)"/>
+    <text x="20" y="25" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#2d3436">Multi-Provider AI Layer</text>
+    
+    <!-- Claude Provider -->
+    <g transform="translate(80, 50)">
+      <rect x="0" y="0" width="300" height="130" fill="url(#claudeGradient)" rx="8" filter="url(#shadow)"/>
+      <text x="150" y="25" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#ffffff">Claude Sonnet-4</text>
+      <text x="150" y="45" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#ffffff">Anthropic</text>
+      
+      <text x="20" y="70" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#ffffff">Specializations:</text>
+      <text x="20" y="85" font-family="Arial, sans-serif" font-size="10" fill="#ffffff">• Financial Analysis</text>
+      <text x="20" y="100" font-family="Arial, sans-serif" font-size="10" fill="#ffffff">• Risk Assessment</text>
+      <text x="20" y="115" font-family="Arial, sans-serif" font-size="10" fill="#ffffff">• Regulatory Compliance</text>
+    </g>
+    
+    <!-- Grok Provider -->
+    <g transform="translate(420, 50)">
+      <rect x="0" y="0" width="300" height="130" fill="url(#grokGradient)" rx="8" filter="url(#shadow)"/>
+      <text x="150" y="25" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#ffffff">Grok-2</text>
+      <text x="150" y="45" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#ffffff">xAI</text>
+      
+      <text x="20" y="70" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#ffffff">Specializations:</text>
+      <text x="20" y="85" font-family="Arial, sans-serif" font-size="10" fill="#ffffff">• Business Strategy</text>
+      <text x="20" y="100" font-family="Arial, sans-serif" font-size="10" fill="#ffffff">• Market Intelligence</text>
+      <text x="20" y="115" font-family="Arial, sans-serif" font-size="10" fill="#ffffff">• Competitive Analysis</text>
+    </g>
+    
+    <!-- OpenAI Provider -->
+    <g transform="translate(760, 50)">
+      <rect x="0" y="0" width="300" height="130" fill="url(#openaiGradient)" rx="8" filter="url(#shadow)"/>
+      <text x="150" y="25" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#ffffff">GPT-4o</text>
+      <text x="150" y="45" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#ffffff">OpenAI</text>
+      
+      <text x="20" y="70" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#ffffff">Specializations:</text>
+      <text x="20" y="85" font-family="Arial, sans-serif" font-size="10" fill="#ffffff">• General Intelligence</text>
+      <text x="20" y="100" font-family="Arial, sans-serif" font-size="10" fill="#ffffff">• Conversation Management</text>
+      <text x="20" y="115" font-family="Arial, sans-serif" font-size="10" fill="#ffffff">• Multi-Modal Analysis</text>
+    </g>
+  </g>
+  
+  <!-- Data Sources Layer -->
+  <g transform="translate(50, 540)">
+    <rect x="0" y="0" width="1300" height="100" fill="#ffffff" rx="10" stroke="#ddd" stroke-width="2" filter="url(#shadow)"/>
+    <text x="20" y="25" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#2d3436">Real-Time Data Integration</text>
+    
+    <rect x="80" y="40" width="120" height="40" fill="#0984e3" rx="5"/>
+    <text x="140" y="58" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#ffffff">Exchange Rates</text>
+    <text x="140" y="70" font-family="Arial, sans-serif" font-size="8" text-anchor="middle" fill="#ffffff">168+ Currencies</text>
+    
+    <rect x="220" y="40" width="120" height="40" fill="#00b894" rx="5"/>
+    <text x="280" y="58" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#ffffff">Sports Data</text>
+    <text x="280" y="70" font-family="Arial, sans-serif" font-size="8" text-anchor="middle" fill="#ffffff">Alpha Vantage</text>
+    
+    <rect x="360" y="40" width="120" height="40" fill="#e17055" rx="5"/>
+    <text x="420" y="58" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#ffffff">Market Data</text>
+    <text x="420" y="70" font-family="Arial, sans-serif" font-size="8" text-anchor="middle" fill="#ffffff">Polygon.io</text>
+    
+    <rect x="500" y="40" width="120" height="40" fill="#6c5ce7" rx="5"/>
+    <text x="560" y="58" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#ffffff">PostgreSQL</text>
+    <text x="560" y="70" font-family="Arial, sans-serif" font-size="8" text-anchor="middle" fill="#ffffff">Database</text>
+  </g>
+  
+  <!-- Data Flow Arrows -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#74b9ff"/>
+    </marker>
+  </defs>
+  
+  <!-- User to API -->
+  <line x1="700" y1="160" x2="700" y2="195" stroke="#74b9ff" stroke-width="3" marker-end="url(#arrowhead)"/>
+  
+  <!-- API to Providers -->
+  <line x1="650" y1="260" x2="230" y2="345" stroke="#74b9ff" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <line x1="700" y1="260" x2="570" y2="345" stroke="#74b9ff" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <line x1="750" y1="260" x2="910" y2="345" stroke="#74b9ff" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Providers to Data -->
+  <line x1="700" y1="500" x2="700" y2="535" stroke="#74b9ff" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Performance Stats -->
+  <g transform="translate(50, 680)">
+    <rect x="0" y="0" width="1300" height="80" fill="#ffffff" rx="10" stroke="#ddd" stroke-width="2" filter="url(#shadow)"/>
+    <text x="20" y="25" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#2d3436">Performance Metrics</text>
+    
+    <g transform="translate(100, 35)">
+      <text x="0" y="15" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#00b894">100%</text>
+      <text x="0" y="30" font-family="Arial, sans-serif" font-size="10" fill="#636e72">Success Rate</text>
+    </g>
+    
+    <g transform="translate(250, 35)">
+      <text x="0" y="15" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#0984e3">30K+</text>
+      <text x="0" y="30" font-family="Arial, sans-serif" font-size="10" fill="#636e72">Analysis Chars</text>
+    </g>
+    
+    <g transform="translate(400, 35)">
+      <text x="0" y="15" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#e17055">3</text>
+      <text x="0" y="30" font-family="Arial, sans-serif" font-size="10" fill="#636e72">AI Providers</text>
+    </g>
+    
+    <g transform="translate(550, 35)">
+      <text x="0" y="15" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#6c5ce7">24/7</text>
+      <text x="0" y="30" font-family="Arial, sans-serif" font-size="10" fill="#636e72">Availability</text>
+    </g>
+    
+    <g transform="translate(700, 35)">
+      <text x="0" y="15" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#fd79a8">&lt;30s</text>
+      <text x="0" y="30" font-family="Arial, sans-serif" font-size="10" fill="#636e72">Response Time</text>
+    </g>
+  </g>
+</svg>
