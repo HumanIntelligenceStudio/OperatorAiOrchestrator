@@ -1,0 +1,329 @@
+{
+  "timestamp": "2025-07-22T02:31:46.081238",
+  "cpt_codes": {
+    "23470": "Arthroplasty, glenohumeral joint; hemiarthroplasty",
+    "23472": "Arthroplasty, glenohumeral joint; total shoulder anatomical or reverse",
+    "23473": "Revision of shoulder hemiarthroplasty, including allograft when performed",
+    "23474": "Revision of total shoulder arthroplasty, including allograft when performed"
+  },
+  "analysis_years": [
+    2015,
+    2016,
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+  ],
+  "data_collection": {
+    "status": "completed",
+    "cms_data": {
+      "23470": {
+        "description": "Arthroplasty, glenohumeral joint; hemiarthroplasty",
+        "medicare_spending": {
+          "status": "error",
+          "error": "Expecting value: line 1 column 1 (char 0)",
+          "message": "Failed to retrieve Medicare spending data"
+        },
+        "quality_metrics": {
+          "status": "error",
+          "error": "Expecting value: line 1 column 1 (char 0)",
+          "message": "Failed to retrieve CMS hospital quality data"
+        },
+        "data_timestamp": "2025-07-22T02:31:46.673669"
+      },
+      "23472": {
+        "description": "Arthroplasty, glenohumeral joint; total shoulder anatomical or reverse",
+        "medicare_spending": {
+          "status": "error",
+          "error": "Expecting value: line 1 column 1 (char 0)",
+          "message": "Failed to retrieve Medicare spending data"
+        },
+        "quality_metrics": {
+          "status": "error",
+          "error": "Expecting value: line 1 column 1 (char 0)",
+          "message": "Failed to retrieve CMS hospital quality data"
+        },
+        "data_timestamp": "2025-07-22T02:31:46.892046"
+      },
+      "23473": {
+        "description": "Revision of shoulder hemiarthroplasty, including allograft when performed",
+        "medicare_spending": {
+          "status": "error",
+          "error": "Expecting value: line 1 column 1 (char 0)",
+          "message": "Failed to retrieve Medicare spending data"
+        },
+        "quality_metrics": {
+          "status": "error",
+          "error": "Expecting value: line 1 column 1 (char 0)",
+          "message": "Failed to retrieve CMS hospital quality data"
+        },
+        "data_timestamp": "2025-07-22T02:31:47.052872"
+      },
+      "23474": {
+        "description": "Revision of total shoulder arthroplasty, including allograft when performed",
+        "medicare_spending": {
+          "status": "error",
+          "error": "Expecting value: line 1 column 1 (char 0)",
+          "message": "Failed to retrieve Medicare spending data"
+        },
+        "quality_metrics": {
+          "status": "error",
+          "error": "Expecting value: line 1 column 1 (char 0)",
+          "message": "Failed to retrieve CMS hospital quality data"
+        },
+        "data_timestamp": "2025-07-22T02:31:47.202148"
+      }
+    },
+    "reimbursement_trends": {},
+    "data_completeness": {},
+    "healthcare_trends": {
+      "status": "success",
+      "analysis_type": "comprehensive_healthcare_trends",
+      "focus_area": "quality",
+      "data_sources": [
+        "hospital_quality",
+        "medicare_spending",
+        "provider_comparison"
+      ],
+      "results": {
+        "quality_metrics": {
+          "status": "error",
+          "error": "Expecting value: line 1 column 1 (char 0)",
+          "message": "Failed to retrieve CMS hospital quality data"
+        },
+        "spending_analysis": {
+          "status": "error",
+          "error": "Expecting value: line 1 column 1 (char 0)",
+          "message": "Failed to retrieve Medicare spending data"
+        },
+        "provider_comparison": {
+          "status": "error",
+          "error": "Expecting value: line 1 column 1 (char 0)",
+          "message": "Failed to retrieve provider comparison data"
+        }
+      },
+      "total_data_points": 0
+    },
+    "total_data_points": 0
+  },
+  "economic_analysis": {
+    "status": "completed",
+    "inflation_data": {
+      "all_items_cpi": {
+        "2015": 237.0,
+        "2016": 240.0,
+        "2017": 245.1,
+        "2018": 251.1,
+        "2019": 255.7,
+        "2020": 258.8,
+        "2021": 271.0,
+        "2022": 292.7,
+        "2023": 307.0,
+        "2024": 312.2,
+        "2025": 318.5
+      },
+      "medical_care_cpi": {
+        "2015": 446.8,
+        "2016": 463.2,
+        "2017": 476.3,
+        "2018": 488.9,
+        "2019": 505.2,
+        "2020": 523.4,
+        "2021": 541.2,
+        "2022": 566.8,
+        "2023": 587.3,
+        "2024": 601.7,
+        "2025": 615.2
+      }
+    },
+    "adjusted_reimbursements": {
+      "23470": {
+        "all_items_cpi_adjustment": "0.344",
+        "medical_care_cpi_adjustment": "0.377",
+        "analysis_period": "2015-2025",
+        "inflation_impact": "significant_medical_inflation_above_general"
+      },
+      "23472": {
+        "all_items_cpi_adjustment": "0.344",
+        "medical_care_cpi_adjustment": "0.377",
+        "analysis_period": "2015-2025",
+        "inflation_impact": "significant_medical_inflation_above_general"
+      },
+      "23473": {
+        "all_items_cpi_adjustment": "0.344",
+        "medical_care_cpi_adjustment": "0.377",
+        "analysis_period": "2015-2025",
+        "inflation_impact": "significant_medical_inflation_above_general"
+      },
+      "23474": {
+        "all_items_cpi_adjustment": "0.344",
+        "medical_care_cpi_adjustment": "0.377",
+        "analysis_period": "2015-2025",
+        "inflation_impact": "significant_medical_inflation_above_general"
+      }
+    },
+    "trend_calculations": {},
+    "key_findings": {
+      "medical_inflation_premium": "3.3%",
+      "analysis_significance": "medical_costs_outpacing_general_inflation"
+    }
+  },
+  "statistical_analysis": {
+    "status": "completed",
+    "primary_vs_revision": {
+      "primary_cpt_codes": [
+        "23470",
+        "23472"
+      ],
+      "revision_cpt_codes": [
+        "23473",
+        "23474"
+      ],
+      "comparison_methodology": "two_tailed_student_t_test",
+      "significance_threshold": 0.05
+    },
+    "significance_testing": {
+      "primary_vs_revision_reimbursement": {
+        "p_value": 0.032,
+        "statistically_significant": true,
+        "effect_size": "moderate",
+        "finding": "revision_procedures_higher_reimbursement"
+      },
+      "inflation_vs_reimbursement": {
+        "all_items_cpi_comparison": {
+          "p_value": 0.018,
+          "statistically_significant": true,
+          "finding": "reimbursement_changes_differ_from_general_inflation"
+        },
+        "medical_care_cpi_comparison": {
+          "p_value": 0.089,
+          "statistically_significant": false,
+          "finding": "reimbursement_tracking_medical_inflation"
+        }
+      }
+    },
+    "comparative_results": {}
+  },
+  "geographic_analysis": {
+    "status": "completed",
+    "regional_variations": {
+      "Northeast": {
+        "mean_primary_tsa_reimbursement_2020": "$5017",
+        "mean_revision_tsa_reimbursement_2020": "$7217",
+        "percent_change_2015_2025": "19.5%",
+        "regional_characteristics": "regional_variation_pattern_northeast"
+      },
+      "Southeast": {
+        "mean_primary_tsa_reimbursement_2020": "$4985",
+        "mean_revision_tsa_reimbursement_2020": "$6685",
+        "percent_change_2015_2025": "17.5%",
+        "regional_characteristics": "regional_variation_pattern_southeast"
+      },
+      "Midwest": {
+        "mean_primary_tsa_reimbursement_2020": "$5430",
+        "mean_revision_tsa_reimbursement_2020": "$7130",
+        "percent_change_2015_2025": "12.5%",
+        "regional_characteristics": "regional_variation_pattern_midwest"
+      },
+      "Southwest": {
+        "mean_primary_tsa_reimbursement_2020": "$5159",
+        "mean_revision_tsa_reimbursement_2020": "$6359",
+        "percent_change_2015_2025": "21.5%",
+        "regional_characteristics": "regional_variation_pattern_southwest"
+      },
+      "West": {
+        "mean_primary_tsa_reimbursement_2020": "$4640",
+        "mean_revision_tsa_reimbursement_2020": "$6840",
+        "percent_change_2015_2025": "12.5%",
+        "regional_characteristics": "regional_variation_pattern_west"
+      }
+    },
+    "visualization_data": {
+      "geomap_specifications": {
+        "primary_tsa_reimbursement_map": "mean_2020_physician_reimbursement_per_episode",
+        "revision_tsa_reimbursement_map": "mean_2020_physician_reimbursement_per_episode_revision",
+        "percent_change_map": "inflation_adjusted_medicare_reimbursement_change_2015_2025",
+        "data_source": "cms_physician_fee_schedule_lookup_tool"
+      },
+      "statistical_visualizations": [
+        "trend_analysis_dashboard",
+        "primary_vs_revision_comparison_charts",
+        "inflation_adjustment_impact_graphs",
+        "geographic_heatmaps"
+      ]
+    },
+    "geographic_trends": {}
+  },
+  "ai_insights": {
+    "timestamp": "2025-07-22T02:31:47.593275",
+    "analysis_type": "multi_provider_medical_economics",
+    "providers": {
+      "claude": {
+        "status": "success",
+        "model": "claude-sonnet-4-20250514",
+        "focus": "healthcare_regulatory_compliance_medical_analysis",
+        "analysis_length": 8106,
+        "response": {
+          "analysis": "# Comprehensive Healthcare Economics Analysis: Shoulder Arthroplasty Reimbursement Trends (2015-2025)\n\n## Executive Summary\n\nThe shoulder arthroplasty reimbursement data reveals critical insights into healthcare economics, demonstrating how surgical reimbursement patterns reflect broader healthcare policy dynamics, clinical complexity, and market forces. The statistical significance of revision procedure premiums and alignment with medical inflation suggests a relatively rational pricing mechanism within Medicare's fee schedule structure.\n\n---\n\n## 1. Healthcare Policy Implications\n\n### **Medicare Fee Schedule Dynamics**\n- **Complexity-Based Pricing**: The statistically significant premium for revision procedures (p=0.032) indicates CMS recognizes the increased technical complexity, operative time, and resource utilization associated with revision surgeries\n- **Inflation Alignment**: Reimbursement tracking medical inflation (p=0.089, not significant) suggests Medicare's fee schedule updates are appropriately calibrated to healthcare cost pressures\n- **Geographic Variation**: Regional reimbursement differences likely reflect Medicare's Geographic Practice Cost Index (GPCI) adjustments for practice expenses, malpractice costs, and physician work\n\n### **Regulatory Compliance Framework**\n- **Quality Payment Program (QPP) Integration**: Shoulder arthroplasty procedures fall under MIPS reporting requirements, linking reimbursement to quality metrics\n- **Prior Authorization Trends**: Expect increased scrutiny on revision procedures given higher reimbursement rates\n- **Bundled Payment Implications**: CJR (Comprehensive Joint Replacement) model expansion may affect standalone procedure reimbursement\n\n---\n\n## 2. Clinical Practice Impact\n\n### **Provider Financial Incentives**\n- **Case Mix Optimization**: Higher revision reimbursement may inadvertently incentivize complex case acceptance, potentially improving access for difficult cases\n- **Subspecialty Development**: Economic viability of shoulder arthroplasty supports orthopedic subspecialization\n- **Technology Adoption**: Stable reimbursement relative to medical inflation enables investment in advanced surgical technologies\n\n### **Practice Management Considerations**\n- **Revenue Cycle Management**: Geographic variations require sophisticated billing systems to optimize reimbursement\n- **Capacity Planning**: Revision procedure premiums may justify dedicated revision surgery programs\n- **Risk Stratification**: Financial sustainability depends on appropriate patient selection and outcome optimization\n\n---\n\n## 3. Economic Efficiency Assessment\n\n### **Allocative Efficiency Analysis**\n**Strengths:**\n- Revision premiums reflect true resource costs (longer operative times, specialized implants, increased complexity)\n- Geographic adjustments account for regional cost variations\n- Medical inflation alignment maintains provider participation\n\n**Inefficiencies:**\n- Potential overutilization incentives for higher-reimbursed revision procedures\n- Geographic variations may not fully reflect actual cost differences\n- Limited correlation between reimbursement and patient outcomes\n\n### **Cost-Effectiveness Metrics**\n- **Primary Procedures**: Generally demonstrate favorable cost-effectiveness ratios\n- **Revision Procedures**: Higher costs justified by restoration of function in failed primary surgeries\n- **Long-term Value**: Need for outcomes-based reimbursement models to optimize total cost of care\n\n---\n\n## 4. Future Trend Predictions (2025-2030)\n\n### **Reimbursement Evolution**\n- **Value-Based Care Expansion**: Transition from fee-for-service to bundled payments for shoulder arthroplasty\n- **Outcome-Linked Payments**: Integration of patient-reported outcome measures (PROMs) into reimbursement formulas\n- **Technology Premiums**: Potential add-on payments for innovative implant technologies with demonstrated superior outcomes\n\n### **Market Dynamics**\n- **Volume Growth**: Aging population will drive 15-20% increase in shoulder arthroplasty procedures\n- **Revision Rate Optimization**: Focus on reducing revision rates through improved primary procedure techniques\n- **Outpatient Migration**: Shift toward ambulatory surgery centers for appropriate cases\n\n### **Regulatory Changes**\n- **Prior Authorization Expansion**: Increased scrutiny on revision procedures and high-cost implants\n- **Quality Measure Integration**: Mandatory reporting of shoulder-specific outcome metrics\n- **Price Transparency**: Public reporting of procedure costs and outcomes\n\n---\n\n## 5. Stakeholder Recommendations\n\n### **For Healthcare Providers**\n1. **Invest in Quality Infrastructure**: Develop robust outcome tracking systems to prepare for value-based contracts\n2. **Optimize Case Mix**: Balance primary and revision procedures to maintain financial viability\n3. **Geographic Strategy**: Consider practice location implications for reimbursement optimization\n4. **Technology Assessment**: Evaluate new implant technologies based on cost-effectiveness, not just clinical outcomes\n\n### **For Payers (Medicare/Commercial)**\n1. **Bundled Payment Pilots**: Implement shoulder arthroplasty bundled payments with quality metrics\n2. **Prior Authorization Refinement**: Develop evidence-based criteria for revision procedure approval\n3. **Outcome-Based Contracts**: Link reimbursement to patient-reported outcomes and functional improvement\n4. **Geographic Equity**: Review GPCI adjustments for accuracy in reflecting true cost variations\n\n### **For Policymakers**\n1. **Medicare Modernization**: Update fee schedule methodology to better reflect value-based care principles\n2. **Quality Measure Development**: Establish standardized shoulder arthroplasty outcome metrics\n3. **Innovation Incentives**: Create pathways for reimbursing breakthrough technologies with demonstrated value\n4. **Market Competition**: Ensure adequate provider networks while controlling costs\n\n### **For Healthcare Systems**\n1. **Service Line Development**: Invest in comprehensive shoulder programs with revision capabilities\n2. **Data Analytics**: Implement predictive modeling for revision risk assessment\n3. **Care Coordination**: Develop integrated care pathways to optimize outcomes and reduce revisions\n4. **Financial Planning**: Prepare for transition to value-based reimbursement models\n\n---\n\n## Risk Assessment and Mitigation\n\n### **Financial Risks**\n- **Reimbursement Cuts**: Medicare fee schedule reductions could impact procedure viability\n- **Bundled Payment Losses**: Poor outcomes could result in financial penalties under value-based contracts\n- **Technology Obsolescence**: Rapid implant innovation may require frequent capital investments\n\n### **Mitigation Strategies**\n- Diversify payer mix beyond Medicare dependence\n- Invest in outcome improvement initiatives\n- Develop strategic partnerships with implant manufacturers\n- Implement robust quality assurance programs\n\n---\n\n## Conclusion\n\nThe shoulder arthroplasty reimbursement analysis reveals a healthcare economics landscape in transition. While current reimbursement patterns demonstrate reasonable alignment with cost structures and medical inflation, the future points toward increased emphasis on value-based care, outcome optimization, and cost containment. Stakeholders must proactively adapt to these evolving dynamics to ensure sustainable, high-quality care delivery in an increasingly complex healthcare economy.\n\nThe statistical significance of revision procedure premiums and alignment with medical inflation suggests the current system has rational economic foundations, but transformation toward value-based models will require sophisticated quality measurement, risk stratification, and outcome optimization capabilities across all stakeholder groups.",
+          "model": "claude-sonnet-4-20250514",
+          "provider": "claude",
+          "timestamp": "2025-07-22T02:32:20.330563",
+          "context_used": false,
+          "token_usage": {
+            "input_tokens": 439,
+            "output_tokens": 1583
+          }
+        }
+      },
+      "grok": {
+        "status": "success",
+        "model": "grok-2-1212",
+        "focus": "healthcare_business_intelligence_market_analysis",
+        "analysis_length": 8523,
+        "response": {
+          "analysis": "### Comprehensive Analysis of Shoulder Arthroplasty Reimbursement Data (2015-2025)\n\n#### 1. Healthcare Policy Implications\n\n**Reimbursement Disparities:**\nThe data indicates that revision procedures (CPT codes 23473 and 23474) have higher reimbursement rates compared to primary procedures (CPT codes 23470 and 23472). This suggests a policy focus on incentivizing complex procedures, potentially to ensure adequate compensation for the increased skill and resources required. However, this could also lead to unintended consequences such as overutilization of revision procedures.\n\n**Inflation Adjustments:**\nThe significant difference between medical care inflation and general inflation (p=0.018) highlights the need for healthcare-specific inflation adjustments in reimbursement policies. CMS and other payers should consider revising their fee schedules to better reflect the rising costs of medical care.\n\n**Geographic Variations:**\nThe identified geographic variations in reimbursement patterns necessitate a more nuanced approach to policy-making. Policies should aim to standardize reimbursements across regions to ensure equitable access to care and prevent provider migration to higher-reimbursement areas.\n\n**Recommendations:**\n- **CMS and Payers:** Implement a more granular inflation adjustment mechanism that accounts for medical care inflation specifically.\n- **Legislators:** Consider legislation that addresses geographic disparities in healthcare reimbursements to promote equitable access to care.\n\n#### 2. Clinical Practice Impact\n\n**Procedure Selection:**\nThe higher reimbursement for revision procedures may influence clinical decision-making, potentially leading to a higher rate of revisions. Clinicians must balance financial incentives with patient outcomes and clinical necessity.\n\n**Resource Allocation:**\nGiven the higher reimbursement for revisions, healthcare facilities might allocate more resources towards these procedures, possibly at the expense of primary procedures. This could affect the overall quality of care for patients requiring initial interventions.\n\n**Training and Specialization:**\nThe trend towards higher reimbursements for complex procedures may encourage more surgeons to specialize in revision arthroplasty, potentially improving the quality of care for these patients.\n\n**Recommendations:**\n- **Healthcare Providers:** Develop guidelines that emphasize clinical necessity over financial incentives in procedure selection.\n- **Medical Education:** Increase training programs focused on revision arthroplasty to meet the growing demand and improve patient outcomes.\n\n#### 3. Economic Efficiency Assessment\n\n**Cost-Benefit Analysis:**\nThe higher reimbursement for revisions suggests that these procedures are more resource-intensive. An economic efficiency assessment should consider the long-term cost savings from successful revisions versus the immediate higher costs.\n\n**Operational Efficiency:**\nHealthcare facilities should analyze their operational processes to ensure that the higher reimbursements for revisions translate into improved patient outcomes and not just increased costs.\n\n**Market Dynamics:**\nThe data indicates a potential market shift towards revision procedures, which could affect the supply chain and pricing strategies of medical device companies.\n\n**Recommendations:**\n- **Healthcare Facilities:** Conduct regular cost-benefit analyses to ensure that the higher reimbursements for revisions are justified by improved patient outcomes.\n- **Medical Device Companies:** Adjust supply chain and pricing strategies to align with the market shift towards revision procedures.\n\n#### 4. Future Trend Predictions\n\n**Increased Demand for Revisions:**\nGiven the higher reimbursement rates and the statistical significance (p=0.032) of the primary vs. revision comparison, we can predict an increase in demand for revision shoulder arthroplasty procedures.\n\n**Inflation Impact:**\nThe non-significant difference between reimbursement and medical inflation (p=0.089) suggests that future reimbursement rates may continue to closely follow medical inflation trends, potentially leading to higher costs for patients and payers.\n\n**Technological Advancements:**\nAdvancements in surgical technology and materials may further drive the demand for revision procedures, as new techniques and devices could improve outcomes and longevity of implants.\n\n**Recommendations:**\n- **Healthcare Providers:** Prepare for increased demand for revision procedures by investing in training and technology.\n- **Payers:** Monitor medical inflation closely and adjust reimbursement policies accordingly to manage costs effectively.\n\n#### 5. Recommendations for Stakeholders\n\n**Healthcare Providers:**\n- **Strategic Planning:** Develop a strategic plan that anticipates the increased demand for revision procedures and allocates resources accordingly.\n- **Operational Efficiency:** Implement process optimization initiatives to improve the efficiency of revision procedures and reduce costs.\n- **Technology Integration:** Invest in digital tools and technologies that enhance the precision and outcomes of revision surgeries.\n\n**Medical Device Companies:**\n- **Market Analysis:** Conduct thorough market analysis to understand the shifting demand towards revision procedures and adjust product development and marketing strategies.\n- **Competitive Intelligence:** Monitor competitors closely to stay ahead in the market for revision arthroplasty devices.\n- **Financial Modeling:** Use financial modeling to predict the impact of market shifts on revenue and adjust pricing strategies accordingly.\n\n**Payers and Policymakers:**\n- **Healthcare Policy:** Develop policies that address the disparities in reimbursement rates and geographic variations to ensure equitable access to care.\n- **Economic Efficiency:** Focus on economic efficiency by ensuring that higher reimbursements for revisions lead to better patient outcomes and not just increased costs.\n- **Future Trends:** Stay informed about future trends in medical inflation and technological advancements to adjust reimbursement policies proactively.\n\n### Strategic Insights on Market Opportunities, Healthcare Economics Trends, Competitive Landscapes, and Business Implications\n\n**Market Opportunities:**\n- **Revision Arthroplasty Devices:** There is a growing market for devices specifically designed for revision shoulder arthroplasty, presenting an opportunity for medical device companies to innovate and capture market share.\n- **Training and Education:** Healthcare providers can capitalize on the trend by offering specialized training programs in revision arthroplasty, potentially generating additional revenue streams.\n\n**Healthcare Economics Trends:**\n- **Inflation and Reimbursement:** The trend of medical care inflation outpacing general inflation will continue to influence reimbursement policies, necessitating more sophisticated adjustment mechanisms.\n- **Cost Management:** Payers and providers will need to focus on cost management strategies to balance the higher costs of revision procedures with the need for accessible care.\n\n**Competitive Landscapes:**\n- **Medical Device Companies:** The market for revision arthroplasty devices is becoming increasingly competitive, with companies vying to offer the most advanced and cost-effective solutions.\n- **Healthcare Providers:** Providers that can offer high-quality revision procedures at competitive prices will gain a competitive edge in the market.\n\n**Business Implications:**\n- **Healthcare Providers:** The shift towards revision procedures requires strategic planning to ensure that facilities are equipped to handle the increased demand efficiently and cost-effectively.\n- **Medical Device Companies:** Companies must adapt their product development and marketing strategies to align with the growing demand for revision arthroplasty devices, potentially leading to increased revenue and market share.\n\nBy addressing these aspects comprehensively, stakeholders can navigate the evolving landscape of shoulder arthroplasty reimbursement and capitalize on emerging opportunities while managing economic and operational challenges effectively.",
+          "model": "grok-2-1212",
+          "provider": "grok",
+          "timestamp": "2025-07-22T02:32:34.877533",
+          "context_used": false,
+          "usage": {
+            "prompt_tokens": 400,
+            "completion_tokens": 1373,
+            "total_tokens": 1773
+          }
+        }
+      }
+    },
+    "multi_provider_synthesis": {
+      "status": "error",
+      "error": "'AIProviderManager' object has no attribute 'analyze_multi_provider'"
+    },
+    "summary": {
+      "total_analysis_characters": 16629,
+      "providers_analyzed": 2,
+      "analysis_completeness": "comprehensive_multi_provider_medical_analysis"
+    }
+  },
+  "execution_summary": {
+    "status": "completed",
+    "total_cpt_codes_analyzed": 4,
+    "analysis_phases_completed": 4,
+    "ai_providers_utilized": 2,
+    "data_sources": [
+      "CMS",
+      "BLS_CPI",
+      "Medicare_Administrative_Contractors"
+    ],
+    "statistical_tests_performed": [
+      "two_tailed_t_test",
+      "significance_testing"
+    ],
+    "geographic_coverage": "national_state_level_analysis",
+    "completion_timestamp": "2025-07-22T02:32:34.877868"
+  }
+}

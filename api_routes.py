@@ -9,6 +9,7 @@ from sports_data_provider import SportsDataProvider
 from exchange_rate_provider import get_exchange_rate_provider
 from cms_provider import CMSProvider
 from openfda_provider import OpenFDAProvider
+from shoulder_arthroplasty_analysis import ShoulderArthroplastyAnalyzer
 
 # Import AI providers (with fallback handling)
 try:
@@ -46,6 +47,9 @@ def get_cms_provider():
 
 def get_openfda_provider():
     return OpenFDAProvider()
+
+def get_medical_research_analyzer():
+    return ShoulderArthroplastyAnalyzer()
 
 def get_ai_provider():
     """Get AI provider manager instance"""
