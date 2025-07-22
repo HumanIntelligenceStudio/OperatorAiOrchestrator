@@ -1,0 +1,130 @@
+# OperatorOS Deployment: Shoulder Arthroplasty Reimbursement Analysis
+
+## System Initialization Command
+```
+Create a comprehensive medical research analysis system for shoulder arthroplasty reimbursement trends using OperatorOS multi-agent orchestration platform.
+```
+
+## Primary Agent Configuration
+
+### Healthcare Analytics Specialist Agent
+**Agent Type**: Medical Research & Healthcare Economics  
+**Primary Model**: Claude Sonnet-4 (regulatory compliance, medical analysis)  
+**Secondary Model**: Grok-2 (business intelligence, market trends)  
+**Tertiary Model**: OpenAI GPT-4o (data processing, statistical analysis)
+
+## Task Specification
+
+### Data Collection Requirements
+Execute comprehensive analysis of procedural trends in shoulder arthroplasty through the following systematic approach:
+
+#### CPT Codes for Analysis
+1. **CPT 23470**: Arthroplasty, glenohumeral joint; hemiarthroplasty
+2. **CPT 23472**: Arthroplasty, glenohumeral joint; total shoulder anatomical or reverse
+3. **CPT 23473**: Revision of shoulder hemiarthroplasty, including allograft when performed
+4. **CPT 23474**: Revision of total shoulder arthroplasty, including allograft when performed
+
+#### Primary Data Sources
+- **CMS Physician Fee Schedule Look-Up Tool** (2015-2025)
+- **Medicare Administrative Contractor** pricing data
+- **US Department of Labor Bureau of Labor Statistics** CPI data
+- **Medical Care-specific CPI** inflation adjustments
+
+### Multi-Agent Analysis Workflow
+
+#### Phase 1: Data Acquisition Agent
+**Objective**: Collect comprehensive reimbursement data from CMS database
+
+**Instructions**:
+1. Query CMS Physician Fee Schedule Look-Up Tool for each CPT code
+2. Extract pricing information for all Medicare Administrative Contractor options
+3. Collect modifier-specific reimbursement rates
+4. Aggregate geographical iterations of reimbursements
+5. Generate averaged comprehensive reimbursement data (2015-2025)
+
+#### Phase 2: Economic Analysis Agent  
+**Objective**: Perform inflation adjustment and statistical analysis
+
+**Instructions**:
+1. Calculate unadjusted percent change in reimbursement rates (2015-2025)
+2. Collect All Items Consumer Price Index data (2015-2025)
+3. Collect Medical Care-specific CPI data (2015-2025)
+4. Apply annual compound adjustment methodology
+5. Convert all data to 2025 dollar equivalents
+6. Generate adjusted average annual and total percentage changes
+
+#### Phase 3: Statistical Comparison Agent
+**Objective**: Execute comparative statistical analysis
+
+**Instructions**:
+1. Perform two-tailed Student t-test comparison of means
+2. Compare reimbursement change vs All Items CPI change
+3. Compare reimbursement change vs Medical Care CPI change
+4. Execute subanalysis: primary vs revision procedures
+5. Apply significance threshold (P < 0.05)
+6. Generate statistical significance reports
+
+#### Phase 4: Visualization & Geographic Analysis Agent
+**Objective**: Create comprehensive data visualizations
+
+**Instructions**:
+1. Utilize Google Sheets GeoMap for geographic representation
+2. Map mean 2020 physician reimbursement per episode (primary TSA)
+3. Map mean 2020 physician reimbursement per episode (revision TSA)
+4. Visualize mean percent change in inflation-adjusted Medicare reimbursement (2015-2025)
+5. Create state-by-state comparative analysis
+6. Generate comprehensive visual report suite
+
+### Analytical Comparisons Required
+
+#### Primary vs Revision Analysis
+- Compare mean percent change: primary procedures vs revision procedures
+- Statistical significance testing using Student t-test
+- Direct comparisons:
+  - Primary TSA vs Revision TSA
+  - Primary hemiarthroplasty vs Revision hemiarthroplasty
+
+#### Economic Context Analysis
+- Medical inflation impact assessment
+- Consumer price fluctuation correlation
+- Regional reimbursement variation analysis
+- Procedural trend identification (2015-2025)
+
+## Output Specifications
+
+### Required Deliverables
+1. **Comprehensive Statistical Report**: Multi-agent analysis synthesis
+2. **Geographic Visualization Suite**: State-by-state reimbursement mapping
+3. **Trend Analysis Dashboard**: Inflation-adjusted reimbursement changes
+4. **Comparative Analysis Report**: Primary vs revision procedure economics
+5. **Raw Data Archive**: Complete dataset with methodology documentation
+
+### Quality Assurance Protocol
+- **Multi-Model Validation**: Cross-verify calculations across all three AI providers
+- **Statistical Verification**: Confirm t-test results and significance levels
+- **Data Integrity Checks**: Validate CMS data extraction accuracy
+- **Inflation Adjustment Verification**: Confirm CPI application methodology
+
+## Execution Command
+
+```
+Deploy healthcare analytics agent pool for shoulder arthroplasty reimbursement analysis. Execute comprehensive data collection from CMS Physician Fee Schedule Look-Up Tool for CPT codes 23470, 23472, 23473, 23474 spanning 2015-2025. Apply dual CPI adjustment methodology (All Items and Medical Care). Perform statistical significance testing using two-tailed Student t-test. Generate geographic visualization suite using Google Sheets GeoMap. Deliver comprehensive multi-agent analysis report with primary vs revision procedure comparison.
+```
+
+## Success Metrics
+- **Data Completeness**: 100% CPT code coverage across all years
+- **Statistical Accuracy**: Proper t-test implementation with significance testing
+- **Visualization Quality**: Professional-grade geographic mapping
+- **Analysis Depth**: 30,000+ character comprehensive report
+- **Multi-Provider Validation**: Consensus across Claude, Grok, and OpenAI analyses
+
+## Implementation Timeline
+- **Phase 1 (Data Collection)**: Immediate execution
+- **Phase 2 (Economic Analysis)**: Real-time processing
+- **Phase 3 (Statistical Analysis)**: Automated statistical testing
+- **Phase 4 (Visualization)**: Geographic mapping generation
+- **Final Report**: Comprehensive synthesis delivery
+
+---
+
+*This deployment leverages OperatorOS's enterprise-grade multi-agent orchestration for medical research analysis, ensuring comprehensive coverage of shoulder arthroplasty reimbursement trends with statistical rigor and professional visualization capabilities.*

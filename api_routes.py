@@ -7,6 +7,8 @@ from agent_master_controller import AgentMasterController
 from health_monitor import HealthMonitor
 from sports_data_provider import SportsDataProvider
 from exchange_rate_provider import get_exchange_rate_provider
+from cms_provider import CMSProvider
+from openfda_provider import OpenFDAProvider
 
 # Import AI providers (with fallback handling)
 try:
@@ -38,6 +40,12 @@ def get_health_monitor():
 
 def get_sports_data_provider():
     return SportsDataProvider()
+
+def get_cms_provider():
+    return CMSProvider()
+
+def get_openfda_provider():
+    return OpenFDAProvider()
 
 def get_ai_provider():
     """Get AI provider manager instance"""
