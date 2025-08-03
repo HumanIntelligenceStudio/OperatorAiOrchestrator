@@ -2,7 +2,7 @@
 
 ## Overview
 
-OperatorOS is an enterprise-grade multi-agent AI orchestration system designed specifically to work with **Replit Agent as the primary user interface**. All user interactions happen through natural language conversations with Replit Agent, which serves as both the development environment and the primary interface for the entire system. The platform manages specialized AI agent pools for different domains (healthcare, financial, sports, business, general) and provides enterprise-level orchestration, monitoring, and automation capabilities.
+OperatorOS is an enterprise-grade multi-agent AI orchestration system designed to work with Replit Agent as the primary user interface. All user interactions happen through natural language conversations with Replit Agent, which serves as both the development environment and the primary interface. The platform manages specialized AI agent pools for different domains (healthcare, financial, sports, business, general) and provides enterprise-level orchestration, monitoring, and automation capabilities. Its business vision is to eliminate the need for traditional web interfaces, streamlining AI interaction directly within the development environment.
 
 ## User Preferences
 
@@ -10,199 +10,47 @@ Preferred communication style: Simple, everyday language.
 
 ## System Architecture
 
-The system follows an unconventional architecture where Replit Agent acts as the primary UI layer, eliminating the need for traditional web interfaces. The core components include:
+The system follows an unconventional architecture where Replit Agent acts as the primary UI layer, eliminating the need for traditional web interfaces.
 
-- **Conversational Interface**: Replit Agent handles all user interactions through natural language
-- **Headless API Backend**: Flask-based REST API without web templates
-- **Agent Orchestration Layer**: Multi-agent management and task distribution
-- **Specialized AI Pools**: Domain-specific agents for healthcare, finance, sports, business, and general queries
-- **Persistent Conversations**: OpenAI Assistants integration for context retention
-- **Real-time Monitoring**: System health and performance tracking
+### Core Architecture
+- **Conversational Interface**: Replit Agent handles all user interactions.
+- **Headless API Backend**: Flask-based REST API without web templates.
+- **Agent Orchestration Layer**: Multi-agent management and task distribution.
+- **Specialized AI Pools**: Domain-specific agents for healthcare, finance, sports, business, and general queries.
+- **Persistent Conversations**: OpenAI Assistants integration for context retention.
+- **Real-time Monitoring**: System health and performance tracking.
 
-## Key Components
+### Design Principles
+- **UI/UX**: Replit Agent conversational UI is the sole interface, handling command processing, interactive demos, and multi-user session management.
+- **Backend**: Flask API server on port 8000, using SQLAlchemy ORM (default SQLite, PostgreSQL support), and a priority-based task queue system with worker threads.
+- **AI Provider Integration**: Primary models include OpenAI GPT-4o, Anthropic Claude Sonnet-4 for finance, and xAI Grok-2 for business. OpenAI Assistants manage persistent conversations. The system supports multi-provider analysis and domain-specific model routing with fallbacks.
+- **Agent Pool Management**: Includes specialists for healthcare (e.g., medical advice, Epic workflow), financial analysis (e.g., investment, personal finance), sports experts, business consultants, and general knowledge.
+- **Data Flow**: User input via Replit Agent -> command processing and intent recognition -> agent selection -> AI processing -> response generation -> conversation persistence.
 
-### Frontend Architecture
-- **Primary Interface**: Replit Agent conversational UI
-- **Command Processing**: Natural language command parsing and execution
-- **Interactive Demos**: Guided demonstrations through conversation
-- **Session Management**: Multi-user conversation state tracking
-
-### Backend Architecture
-- **Flask API Server**: Headless backend running on port 8000
-- **SQLAlchemy ORM**: Database abstraction with SQLite default
-- **RESTful Endpoints**: API routes for system operations
-- **Task Queue System**: Priority-based task processing with worker threads
-
-### AI Provider Integration
-- **OpenAI GPT-4o**: Primary model for most agent types
-- **Anthropic Claude Sonnet-4**: Advanced financial analysis, risk assessment, and regulatory compliance
-- **xAI Grok-2**: Business strategy, market analysis, and competitive intelligence
-- **OpenAI Assistants**: Persistent conversation management
-- **Multi-Provider Analysis**: Comprehensive insights from multiple AI models simultaneously
-- **Provider Routing**: Domain-specific model selection with fallback handling
-
-### Agent Pool Management
-- **Healthcare Specialists**: Medical advice and symptom analysis
-- **Financial Analysts**: Investment advice and market analysis
-- **Sports Experts**: Game predictions and player statistics
-- **Business Consultants**: Process optimization and automation
-- **General Knowledge**: Comprehensive assistance across topics
-
-## Data Flow
-
-1. **User Input**: Natural language queries through Replit Agent
-2. **Command Processing**: Intent recognition and command routing
-3. **Agent Selection**: Domain-specific agent pool assignment
-4. **AI Processing**: Provider-specific model execution
-5. **Response Generation**: Formatted responses back to Replit Agent
-6. **Conversation Persistence**: Context storage for future interactions
-
-The system maintains conversation context across sessions and provides real-time status updates through the conversational interface.
+### Feature Specifications
+- **Personal Finance Management**: Comprehensive budget management, expense tracking, and financial goal setting with AI-powered insights, multi-currency support, and database persistence per user.
+- **Epic Healthcare System Integration**: Full Epic documentation conversion (PDF to Markdown) across 21 major modules, enabling healthcare workflow management, technical configuration details, and strategic integration for clinical optimization.
+- **Medical Research Analysis**: CPT code-based reimbursement analysis (e.g., shoulder arthroplasty), multi-provider medical economics insights, statistical testing, and longitudinal analysis.
 
 ## External Dependencies
 
-### Healthcare Data Integration (NEW - July 22, 2025)
-- **CMS API**: Centers for Medicare & Medicaid Services data access
-- **OpenFDA API**: Food and Drug Administration safety and recall data
-- **Environment Variables**: `CMS_KEY` and `OPEN_FDA_KEY` configured
-- **Real-time Healthcare Data**: Hospital quality, Medicare spending, drug safety
-- **Government Data Sources**: Authoritative healthcare information from federal agencies
-
-### AI Providers (ENHANCED - July 21, 2025)
-- **OpenAI API**: GPT-4o model access and Assistants API for general intelligence
-- **Anthropic API**: Claude Sonnet-4 integration for advanced financial analysis and regulatory compliance
-- **xAI API**: Grok-2 integration for business strategy and competitive intelligence
-- **Environment Variables**: `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, and `XAI_API_KEY` configured
-- **Multi-Provider Capabilities**: Simultaneous analysis from multiple AI models for comprehensive insights
-
-### Sports Data Integration
-- **Alpha Vantage API**: Sports betting odds, team performance, player statistics
-- **Polygon.io API**: Advanced market data for sports-related stocks
-- **Environment Variables**: `ALPHA_API_KEY` and `POLYGON_KEY` integrated
-- **Real-time Data**: Live sports scores, betting odds, market analysis
-
-### Exchange Rate Integration (NEW)
-- **ExchangeRate-API**: Real-time currency conversion across 168+ currencies
-- **Free API Fallbacks**: exchangerate.host and static demo rates for reliability
-- **Environment Variable**: `EXCHANGERATE_KEY` configured with fallback systems
-- **Financial Integration**: Multi-currency support for international operations
-
-### System Dependencies
-- **Flask**: Web framework for API backend
-- **SQLAlchemy**: Database ORM and migrations
-- **psutil**: System performance monitoring
-- **threading**: Concurrent task processing
-
-### Database
-- **Default**: SQLite for development and testing
-- **Production Ready**: Supports PostgreSQL through DATABASE_URL environment variable
-- **Drizzle Compatible**: Can be extended with Drizzle ORM if needed
-
-## Deployment Strategy
-
-### Development Environment
-- **Replit Integration**: Designed to run natively in Replit environment
-- **Auto-initialization**: Database tables created on first run
-- **Hot Reload**: Flask debug mode enabled for development
-
-### Production Considerations
-- **Environment Variables**: Secure API key management
-- **Database Migration**: SQLite to PostgreSQL transition support
-- **Health Monitoring**: Built-in system health checks and alerting
-- **Scalability**: Multi-threaded task processing with configurable worker pools
-
-### Startup Process
-1. Initialize Flask application and database
-2. Create default agent pools and configurations
-3. Start agent master controller and health monitoring
-4. Launch Replit Agent interface for user interactions
-5. Begin background task processing and system monitoring
-
-The system is designed to be fully operational through conversational commands, eliminating the need for traditional web dashboards or configuration interfaces.
-
-## Recent Updates
-
-### Epic Healthcare System Integration - Complete Suite (July 30, 2025)
-
-**Major Achievement: Comprehensive Epic Documentation Conversion**
-- ✅ **21 Epic Guides Converted**: Complete PDF to markdown conversion across all major Epic modules
-- ✅ **Healthcare Workflow Documentation**: Full Epic clinical and operational workflow management
-- ✅ **Professional Healthcare Documentation**: Enterprise-grade healthcare system documentation
-- ✅ **Technical Configuration Details**: Complete setup procedures for all Epic scheduling modules
-- ✅ **Strategic Healthcare Integration**: Comprehensive foundation for clinical workflow optimization
-
-**Complete Epic Documentation Suite:**
-1. **Decision Trees Setup and Support Guide** - Clinical workflow management
-2. **Appointment Communications Setup and Support Guide** - Patient communication systems
-3. **Book Anywhere Setup and Support Guide** - Inter-organizational scheduling
-4. **Cadence Operational Strategy Handbook** - Performance optimization strategies
-5. **Fast Pass Setup and Support Guide** - Automated wait list management
-6. **Hospital Accounts Setup and Support Guide** - Financial account management
-7. **Interpreter Scheduling Setup and Support Guide** - Language services coordination
-8. **MyChart Scheduling Setup and Support Guide** - Patient self-scheduling
-9. **On My Way Setup and Support Guide** - Patient arrival notifications
-10. **Open Scheduling Setup and Support Guide** - Direct patient booking
-11. **Provider Finder Setup and Support Guide** - Provider search and selection
-12. **Provider Schedules Setup and Support Guide** - Provider schedule optimization
-13. **Provider/Resource Master File Setup and Support Guide** - Provider data management
-14. **Referrals and Orders Setup and Support Guide** - Care coordination workflows
-15. **Scheduling Questionnaires Setup and Support Guide** - Pre-visit data collection
-16. **Sign In, Check In, and Check Out Setup and Support Guide** - Patient flow management
-17. **Transitioning to System-Guided Scheduling** - Implementation strategies
-18. **Visit Types Setup and Support Guide** - Appointment categorization
-19. **Wait List Setup and Support Guide** - Patient queue management
-20. **Scheduling Questionnaires Setup and Support Guide** (duplicate removed)
-21. **Additional Epic modules** - Comprehensive healthcare system coverage
-
-**Epic Integration Status: COMPLETE**
-- ✅ **All Major Epic Modules**: Complete documentation across scheduling, communications, workflow management
-- ✅ **Professional Documentation**: Enterprise-grade clinical and operational procedures
-- ✅ **Implementation Guides**: Step-by-step setup and configuration procedures
-- ✅ **Strategic Planning**: Operational optimization and performance improvement strategies
-- ✅ **Healthcare System Foundation**: Comprehensive Epic-based healthcare management capabilities
-
-### Medical Research Analysis System Deployed (July 22, 2025)
-
-**Major Achievement: Comprehensive Medical Research Platform**
-- ✅ **Shoulder Arthroplasty Analysis**: Complete CPT code-based reimbursement analysis
-- ✅ **4 CPT Procedures Analyzed**: Hemiarthroplasty and total shoulder arthroplasty
-- ✅ **16,629 Characters AI Analysis**: Multi-provider medical economics insights
-- ✅ **Statistical Testing Framework**: Professional-grade research methodology
-- ✅ **10-Year Longitudinal Analysis**: 2015-2025 reimbursement trend analysis
-
-### Healthcare Data Integration Completed (July 22, 2025)
-
-**Major System Expansion: Healthcare Analytics**
-- ✅ **CMS API Integration**: Centers for Medicare & Medicaid Services data access
-- ✅ **OpenFDA API Integration**: Food and Drug Administration safety data
-- ✅ **Real Healthcare Data**: 445KB of authentic government health data processed
-- ✅ **AI Healthcare Analysis**: 9,611 characters of multi-provider health insights
-- ✅ **API Connectivity**: 100% success rate for both CMS and OpenFDA connections
-
-**Healthcare Data Sources Added:**
-- **Hospital Quality Metrics**: Patient safety, readmission rates, performance scores
-- **Medicare Spending Analysis**: Cost per beneficiary, regional patterns
-- **Drug Adverse Events**: Real FDA safety reports from healthcare providers
-- **Drug Recalls & Alerts**: FDA enforcement actions and safety warnings
-- **Medical Device Safety**: Adverse event monitoring and risk assessment
-- **Food Safety Recalls**: Consumer protection and contamination tracking
-
-**Healthcare AI Capabilities:**
-- **Claude**: Healthcare quality analysis, regulatory compliance assessment
-- **Grok**: Healthcare innovation strategy, market opportunity analysis
-- **Combined Intelligence**: Comprehensive health risk and opportunity evaluation
-
-### Multi-Provider AI Integration Completed (July 21, 2025)
-- **Claude Sonnet-4**: Successfully integrated for sophisticated financial analysis, risk assessment, and regulatory compliance analysis
-- **Grok-2**: Successfully integrated for business strategy, competitive analysis, and market opportunity assessment
-- **Enhanced Capabilities**: Multi-model analysis providing diverse AI perspectives on financial scenarios
-- **API Endpoints**: New REST endpoints for multi-provider analysis, risk assessment, and compliance analysis
-- **Production Ready**: All providers tested and operational with comprehensive error handling and fallback mechanisms
-
-### Key Features Added
-- Multi-provider financial analysis combining insights from Claude, Grok, and OpenAI
-- Advanced risk assessment with regulatory compliance focus
-- Market sentiment analysis from multiple AI perspectives  
-- Comprehensive compliance analysis for financial services
-- Enhanced API endpoints for direct provider access
-- Robust error handling and provider fallback systems
+- **AI Providers**:
+    - **OpenAI API**: GPT-4o, Assistants API (`OPENAI_API_KEY`)
+    - **Anthropic API**: Claude Sonnet-4 (`ANTHROPIC_API_KEY`)
+    - **xAI API**: Grok-2 (`XAI_API_KEY`)
+- **Healthcare Data Integration**:
+    - **CMS API**: Centers for Medicare & Medicaid Services data (`CMS_KEY`)
+    - **OpenFDA API**: Food and Drug Administration safety and recall data (`OPEN_FDA_KEY`)
+- **Sports Data Integration**:
+    - **Alpha Vantage API**: Sports betting odds, player statistics (`ALPHA_API_KEY`)
+    - **Polygon.io API**: Sports-related stock market data (`POLYGON_KEY`)
+- **Exchange Rate Integration**:
+    - **ExchangeRate-API**: Real-time currency conversion (`EXCHANGERATE_KEY`) with fallbacks to exchangerate.host.
+- **System Dependencies**:
+    - **Flask**: Web framework
+    - **SQLAlchemy**: Database ORM
+    - **psutil**: System performance monitoring
+    - **threading**: Concurrent task processing
+- **Database**:
+    - Default: SQLite
+    - Production: PostgreSQL (via `DATABASE_URL`)
